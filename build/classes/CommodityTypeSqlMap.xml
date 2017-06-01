@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap
+            PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+            "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<!-- SqlMap定義 -->
+<sqlMap namespace="CommodityType">
+<select id="selectCommodityTypeList"
+		resultClass="cn.agriculture.web.form.CommodityTypeForm">
+			SELECT commodity_type.commodity_type_id as commodityTypeId,
+			commodity_type.commodity_type_name as commodityTypeName,
+			commodity_type.commodity_type_note as note
+			FROM commodity_type
+</select>
+<select id="selectCommodityType"
+		parameterClass="cn.agriculture.web.form.CommodityTypeForm"
+		resultClass="cn.agriculture.web.form.CommodityTypeForm">
+			SELECT commodity_type.commodity_type_id as commodityTypeId,
+			commodity_type.commodity_type_name as commodityTypeName,
+			commodity_type.commodity_type_note as note
+			FROM commodity_type
+			WHERE
+			commodity_type_id=#commodityTypeId#
+</select>
+<select id="selectCommodityTypeName"
+		parameterClass="cn.agriculture.web.form.CommodityTypeForm"
+		resultClass="cn.agriculture.web.form.CommodityTypeForm">
+			SELECT commodity_type.commodity_type_name as commodityTypeName
+			FROM commodity_type
+			WHERE
+			commodity_type_name=#commodityTypeName#
+</select>
+<select id="getType" resultClass="java.lang.Integer">
+		SELECT _nextval('commodityTypeId')
+</select>
+<update id="updateCommodityType"
+		parameterClass="cn.agriculture.web.form.CommodityTypeForm">
+		update commodity_type set commodity_type_name=#commodityTypeName#,
+		commodity_type_note=#note#
+		WHERE	
+		commodity_type_id=#commodityTypeId#
+</update>
+<delete id="delCommodityType"
+		parameterClass="cn.agriculture.web.form.CommodityTypeForm">
+		delete from commodity_type 
+		WHERE commodity_type_id=#commodityTypeId# 
+
+</delete>
+<insert id="addCommodityType"
+		parameterClass="cn.agriculture.web.form.CommodityTypeForm">
+		insert into commodity_type(commodity_type_id,commodity_type_name,commodity_type_note) 
+		values(#commodityTypeId#,#commodityTypeName#,#note#)
+
+</insert>
+</sqlMap>

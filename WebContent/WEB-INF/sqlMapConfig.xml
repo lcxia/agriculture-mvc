@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMapConfig
+            PUBLIC "-//ibatis.apache.org//DTD SQL Map Config 2.0//EN"
+            "http://ibatis.apache.org/dtd/sql-map-config-2.dtd">
+<!-- SqlMapConfig定義 -->
+<sqlMapConfig>
+    <!-- sqlMapを分割する場合、sqlIDの重複を考慮する必要があるため、-->
+    <!-- デフォルト設定ではuseStatementNamespaces=true にしています。 -->
+    <!-- namespaceによるsqlMapの分割が必要ない場合コメントアウトして下さい。 -->
+    <settings useStatementNamespaces="true" />
+    <typeHandler jdbcType="BLOB" javaType="[B" callback="org.springframework.orm.ibatis.support.BlobByteArrayTypeHandler" />
+    <sqlMap resource="UserSqlMap.xml" />
+    <sqlMap resource="SupplierSqlMap.xml" />
+    <sqlMap resource="BrandSqlMap.xml" />
+    <sqlMap resource="CommoditySqlMap.xml" />
+    <sqlMap resource="GuestSqlMap.xml" />
+    <sqlMap resource="StockSqlMap.xml" />
+    <sqlMap resource="ExpressSqlMap.xml" />
+    <sqlMap resource="ExpressPriceSqlMap.xml" />
+    <sqlMap resource="ExpressListSqlMap.xml" />
+    <sqlMap resource="DistributorSqlMap.xml" />
+    <sqlMap resource="DistributorPriceSqlMap.xml" />
+    <sqlMap resource="PlaceOrderSqlMap.xml" />
+    <sqlMap resource="PlaceOrderDetailSqlMap.xml" />
+    <sqlMap resource="ChargeSqlMap.xml" />
+    <sqlMap resource="ChargeConfirmSqlMap.xml" />
+    <sqlMap resource="DeliverySqlMap.xml" />
+    <sqlMap resource="DeliveryDetailSqlMap.xml" />
+    <sqlMap resource="GoodsSqlMap.xml" />
+    <sqlMap resource="CartSqlMap.xml" />
+    <sqlMap resource="CitySqlMap.xml" />
+    <sqlMap resource="AlipaySqlMap.xml" />
+    <sqlMap resource="QrCodeSqlMap.xml" />
+    <sqlMap resource="SpecialSqlMap.xml" />
+    <sqlMap resource="RebateSqlMap.xml" />
+    <sqlMap resource="AlipayReportSqlMap.xml" />
+    <sqlMap resource="MessageSqlMap.xml" />
+    <sqlMap resource="MessageReplySqlMap.xml" />
+    <sqlMap resource="CommodityTypeSqlMap.xml" />
+    <sqlMap resource="CommonSqlMap.xml" />
+     <sqlMap resource="ReceiveSqlMap.xml" />
+</sqlMapConfig>

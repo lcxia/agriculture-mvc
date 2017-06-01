@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap
+            PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+            "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<!-- SqlMap定義 -->
+<sqlMap namespace="Cart">
+
+	<select id="selectCartList" parameterClass="cn.agriculture.web.form.CartForm"
+		resultClass="cn.agriculture.web.form.CartForm">
+		SELECT cart.cart_id as cartId,
+			cart.guest_id as guestId,
+			cart.count as count,
+			commodity.commodity_id as commodityId,
+			commodity.type as type,
+			supplier.supplier_name as supplierName,
+			brand.brand_name as brandName,
+			commodity.commodity_name as commodityName,
+			commodity.weight as weight,
+			commodity.is_gift as isGift,
+			commodity.specifications as specifications,
+			commodity.unit as unit,
+			commodity.benchmark_price as benchmarkPrice,
+			commodity.guide_price as guidePrice,
+			commodity.retail_price as retailPrice,
+			commodity.competition_level as competitionLevel,
+			commodity.note as note,
+			cart.update_time as updateTime,
+			cart.update_user as updateUser,
+			commodity.picture_id as pictureId
+		FROM cart, commodity, supplier, brand
+		WHERE cart.commodity_id = commodity.commodity_id
+		AND commodity.supplier_id = supplier.supplier_id
+		AND commodity.brand_id = brand.brand_id
+		AND cart.status = #status#
+		AND cart.guest_id = #guestId#
+	</select>
+	<insert id="addCart" parameterClass="cn.agriculture.web.form.CartForm">
+		INSERT INTO cart(cart_id, commodity_id, guest_id, count, update_time, update_user, status)
+		VALUES(#cartId#, #commodityId#, #guestId#, #count#, #updateTime#, #updateUser#, #status#)
+	</insert>
+	
+	<select id="selectStock" parameterClass="cn.agriculture.web.form.CartForm" resultClass="java.lang.Integer">
+		SELECT stock FROM stock WHERE commodity_id = #commodityId#
+	</select>
+	
+	<select id="selectCount" parameterClass="cn.agriculture.web.form.CartForm" resultClass="java.lang.Integer">
+		SELECT count FROM cart 
+		WHERE cart_id = #cartId#
+	</select>
+	
+	<update id="editStock" parameterClass="cn.agriculture.web.form.CartForm">
+		UPDATE stock SET stock = #count#,
+		update_time = #updateTime#,
+		update_user = #updateUser#
+		WHERE commodity_id = #commodityId#
+	</update>
+	
+		<update id="editStockAgain" parameterClass="cn.agriculture.web.form.CartForm">
+		UPDATE stock SET stock = #stock#,
+		update_time = #updateTime#,
+		update_user = #updateUser#
+		WHERE commodity_id = #commodityId#
+	</update>
+	
+	<select id="getSeq" resultClass="java.lang.Integer">
+		SELECT _nextval('cartId')
+	</select>
+	
+	<update id="editCart" parameterClass="cn.agriculture.web.form.CartForm">
+		UPDATE cart SET count = #count#,
+		update_time = #updateTime#,
+		update_user = #updateUser#
+		WHERE cart_id = #cartId#
+	</update>
+	
+	<delete id="delCart" parameterClass="cn.agriculture.web.form.CartForm">
+		DELETE FROM cart
+		WHERE cart_id = #cartId#
+	</delete>
+	
+	<delete id="deleteOrder" parameterClass="cn.agriculture.web.form.AlipayForm">
+		DELETE FROM alipay_history
+		WHERE out_trade_no = #outTradeNo#
+	</delete>
+	
+	<insert id="addAlipayHistory" parameterClass="cn.agriculture.web.form.AlipayForm">
+		INSERT INTO alipay_history(out_trade_no, subject, price, body, show_url, receive_name, receive_address, receive_zip, receive_phone, receive_mobile, guest_id, update_time, update_user, is_rebate, commodity_id)
+		VALUES(#outTradeNo#, #subject#, #price#, #body#, #showUrl#, #receiveName#, #receiveAddress#, #receiveZip#, #receivePhone#, #receiveMobile#, #guestId#, #updateTime#, #updateUser#, '未返点', #commodityId#)
+	</insert>
+	
+	<update id="updateCartStatus" parameterClass="cn.agriculture.web.form.CartForm">
+		UPDATE cart SET status = #status#,
+		update_time = #updateTime#,
+		update_user = #updateUser#
+		WHERE guest_id = #guestId#
+		AND status = '未付款'
+	</update>
+	
+	<update id="updateStatus" parameterClass="cn.agriculture.web.form.CartForm">
+		UPDATE cart SET status = #status#,
+		update_time = #updateTime#,
+		update_user = #updateUser#
+		WHERE cart_id = #cartId#
+		AND status = '未付款'
+	</update>
+	
+	<select id="selectAlipayHistoryList" parameterClass="cn.agriculture.web.form.CartForm"
+		resultClass="cn.agriculture.web.form.AlipayForm">
+		SELECT out_trade_no as outTradeNo,
+			subject as subject,
+			price as price,
+			body as body,
+			show_url as showUrl,
+			receive_name as receiveName,
+			receive_address as receiveAddress,
+			receive_zip as receiveZip,
+			receive_phone as receivePhone,
+			receive_mobile as receiveMobile,
+			guest_id as guestId,
+			update_time as updateTime,
+			update_user as updateUser,
+			is_paid as isPaid
+		FROM alipay_history
+		WHERE commodity_id is null
+		AND guest_id = #guestId#
+		ORDER BY update_time DESC
+	</select>
+	
+		<select id="selectAlipayHistoryListCount" parameterClass="cn.agriculture.web.form.CartForm"
+		resultClass="java.lang.Double">
+		SELECT count(0)
+		FROM alipay_history
+		WHERE commodity_id is null
+		AND guest_id = #guestId#
+		ORDER BY update_time DESC
+	</select>
+	
+	<select id="selectAlipayHistory" parameterClass="cn.agriculture.web.form.AlipayForm"
+		resultClass="cn.agriculture.web.form.AlipayForm">
+		SELECT out_trade_no as outTradeNo,
+			subject as subject,
+			price as price,
+			body as body,
+			show_url as showUrl,
+			receive_name as receiveName,
+			receive_address as receiveAddress,
+			receive_zip as receiveZip,
+			receive_phone as receivePhone,
+			receive_mobile as receiveMobile,
+			guest_id as guestId,
+			update_time as updateTime,
+			update_user as updateUser
+		FROM alipay_history
+		WHERE out_trade_no = #outTradeNo#
+	</select>
+	
+	<select id="selectGuestPrice"
+		parameterClass="cn.agriculture.web.form.CartForm"
+		resultClass="cn.agriculture.web.form.CartForm">
+		SELECT commodity.type as type,
+			supplier.supplier_name as supplierName,
+			brand.brand_name as brandName,
+			commodity.specifications as specifications,
+			commodity.commodity_id as commodityId,
+			commodity.commodity_name as commodityName,
+			commodity.guide_price as guidePrice,
+			commodity.benchmark_price as benchmarkPrice,
+            commodity.retail_price as retailPrice,
+			commodity.is_gift as isGift,
+			stock.stock as count
+		FROM commodity, supplier, brand, stock
+		WHERE commodity.supplier_id = supplier.supplier_id
+		AND commodity.brand_id = brand.brand_id
+		AND commodity.commodity_id = stock.commodity_id
+		AND commodity.commodity_id = #commodityId#
+	</select>
+	
+	<select id="selectCartListForCartId" parameterClass="cn.agriculture.web.form.CartForm"
+		resultClass="cn.agriculture.web.form.CartForm">
+		SELECT cart.cart_id as cartId,
+			cart.guest_id as guestId,
+			cart.count as count,
+			commodity.commodity_id as commodityId,
+			commodity.type as type,
+			supplier.supplier_name as supplierName,
+			brand.brand_name as brandName,
+			commodity.commodity_name as commodityName,
+			commodity.weight as weight,
+			commodity.is_gift as isGift,
+			commodity.specifications as specifications,
+			commodity.unit as unit,
+			commodity.benchmark_price as benchmarkPrice,
+			commodity.guide_price as guidePrice,
+			commodity.retail_price as retailPrice,
+			commodity.competition_level as competitionLevel,
+			commodity.note as note,
+			cart.update_time as updateTime,
+			cart.update_user as updateUser,
+			commodity.picture_id as pictureId
+		FROM cart, commodity, supplier, brand
+		WHERE cart.commodity_id = commodity.commodity_id
+		AND commodity.supplier_id = supplier.supplier_id
+		AND commodity.brand_id = brand.brand_id
+		AND cart.status = #status#
+		AND cart.cart_id in($cartId$)
+	</select>
+
+	<select id="selectCart" parameterClass="cn.agriculture.web.form.CartForm"
+		resultClass="cn.agriculture.web.form.CartForm">
+		SELECT cart.cart_id as cartId,
+			cart.guest_id as guestId,
+			cart.count as count,
+			commodity.commodity_id as commodityId,
+			commodity.type as type,
+			supplier.supplier_name as supplierName,
+			brand.brand_name as brandName,
+			commodity.commodity_name as commodityName,
+			commodity.weight as weight,
+			commodity.is_gift as isGift,
+			commodity.specifications as specifications,
+			commodity.unit as unit,
+			commodity.benchmark_price as benchmarkPrice,
+			commodity.guide_price as guidePrice,
+			commodity.retail_price as retailPrice,
+			commodity.competition_level as competitionLevel,
+			commodity.note as note,
+			cart.update_time as updateTime,
+			cart.update_user as updateUser,
+			commodity.picture_id as pictureId
+		FROM cart, commodity, supplier, brand
+		WHERE cart.commodity_id = commodity.commodity_id
+		AND commodity.supplier_id = supplier.supplier_id
+		AND commodity.brand_id = brand.brand_id
+		AND cart.status = #status#
+		AND cart.commodity_id = #commodityId#
+		AND cart.guest_id = #guestId#
+	</select>
+	
+
+	<update id="updateCartStatus1" parameterClass="cn.agriculture.web.form.CartForm">
+		UPDATE cart SET status = #status#,
+		update_time = #updateTime#,
+		update_user = #updateUser#
+		WHERE cart_id = #cartId#
+		AND status = '未付款'
+	</update>
+	
+	<update id="updateCart" parameterClass="cn.agriculture.web.form.CartForm">
+		UPDATE cart SET count = #count#
+		WHERE commodity_id = #commodityId#		
+		AND guest_id = #guestId#	
+	</update>
+	
+</sqlMap>

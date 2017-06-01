@@ -1,0 +1,342 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap
+            PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+            "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<!-- SqlMap定義 -->
+<sqlMap namespace="Goods">
+	<select id="selectGoodsList"
+		parameterClass="cn.agriculture.web.form.GoodsForm"
+		resultClass="cn.agriculture.web.form.GoodsForm">
+		SELECT commodity.commodity_id as commodityId,
+			commodity.type as type,
+			commodity_type.commodity_type_id as commodityTypeId,
+			commodity_type.commodity_type_name as commodityTypeName,
+			supplier.supplier_name as supplierName,
+			brand.brand_name as brandName,
+			commodity.commodity_name as commodityName,
+			commodity.weight as weight,
+			commodity.is_gift as isGift,
+			commodity.specifications as specifications,
+			commodity.unit as unit,
+			commodity.benchmark_price as benchmarkPrice,
+			commodity.guide_price as guidePrice,
+			commodity.retail_price as retailPrice,
+			commodity.competition_level as competitionLevel,
+			commodity.note as note,
+			commodity.update_time as updateTime,
+			commodity.update_user as updateUser,
+			commodity.picture_id as pictureId,
+			stock.stock as stock
+		FROM commodity, supplier, brand, stock,commodity_type
+		WHERE commodity.commodity_id = stock.commodity_id
+		AND commodity.supplier_id = supplier.supplier_id
+		AND commodity.brand_id = brand.brand_id
+		AND commodity.type = commodity_type.commodity_type_id
+	</select>
+	<select id="selectGoodsListOder"
+		parameterClass="cn.agriculture.web.form.GoodsForm"
+		resultClass="cn.agriculture.web.form.GoodsForm">
+		SELECT commodity.commodity_id as commodityId,
+			commodity.type as type,
+			commodity_type.commodity_type_id as commodityTypeId,
+			commodity_type.commodity_type_name as commodityTypeName,
+			supplier.supplier_name as supplierName,
+			brand.brand_name as brandName,
+			commodity.commodity_name as commodityName,
+			commodity.weight as weight,
+			commodity.is_gift as isGift,
+			commodity.specifications as specifications,
+			commodity.unit as unit,
+			commodity.benchmark_price as benchmarkPrice,
+			commodity.guide_price as guidePrice,
+			commodity.retail_price as retailPrice,
+			commodity.competition_level as competitionLevel,
+			commodity.note as note,
+			commodity.update_time as updateTime,
+			commodity.update_user as updateUser,
+			commodity.picture_id as pictureId,
+			stock.stock as stock
+		FROM commodity, supplier, brand, stock,commodity_type
+		WHERE commodity.commodity_id = stock.commodity_id
+		AND commodity.supplier_id = supplier.supplier_id
+		AND commodity.brand_id = brand.brand_id
+		AND commodity.type = commodity_type.commodity_type_id
+		ORDER BY cast(stock.stock as signed) DESC
+	</select>
+	<select id="selectGoodsListByPopularDesc"
+		parameterClass="cn.agriculture.web.form.GoodsForm"
+		resultClass="cn.agriculture.web.form.GoodsForm">
+		SELECT commodity.commodity_id as commodityId,
+			commodity.type as type,
+			commodity_type.commodity_type_id as commodityTypeId,
+			commodity_type.commodity_type_name as commodityTypeName,
+			supplier.supplier_name as supplierName,
+			brand.brand_name as brandName,
+			commodity.commodity_name as commodityName,
+			commodity.weight as weight,
+			commodity.is_gift as isGift,
+			commodity.specifications as specifications,
+			commodity.unit as unit,
+			commodity.benchmark_price as benchmarkPrice,
+			commodity.guide_price as guidePrice,
+			commodity.retail_price as retailPrice,
+			commodity.competition_level as competitionLevel,
+			commodity.note as note,
+			commodity.update_time as updateTime,
+			commodity.update_user as updateUser,
+			commodity.picture_id as pictureId,
+			stock.stock as stock
+		FROM commodity, supplier, brand, stock,commodity_type
+		WHERE commodity.commodity_id = stock.commodity_id
+		AND commodity.supplier_id = supplier.supplier_id
+		AND commodity.brand_id = brand.brand_id
+		AND commodity.type = commodity_type.commodity_type_id
+        <isNotEmpty  property="commodityTypeId">
+		AND commodity_type.commodity_type_id=#commodityTypeId#
+		</isNotEmpty>
+		<isNotEmpty   property="commodityName">
+		AND commodity.commodity_name LIKE '%$commodityName$%'
+		</isNotEmpty>
+		ORDER BY cast(stock.stock as signed) DESC
+	</select>
+		<select id="selectGoodsListByPopular"
+		parameterClass="cn.agriculture.web.form.GoodsForm"
+		resultClass="cn.agriculture.web.form.GoodsForm">
+		SELECT commodity.commodity_id as commodityId,
+			commodity.type as type,
+			commodity_type.commodity_type_id as commodityTypeId,
+			commodity_type.commodity_type_name as commodityTypeName,
+			supplier.supplier_name as supplierName,
+			brand.brand_name as brandName,
+			commodity.commodity_name as commodityName,
+			commodity.weight as weight,
+			commodity.is_gift as isGift,
+			commodity.specifications as specifications,
+			commodity.unit as unit,
+			commodity.benchmark_price as benchmarkPrice,
+			commodity.guide_price as guidePrice,
+			commodity.retail_price as retailPrice,
+			commodity.competition_level as competitionLevel,
+			commodity.note as note,
+			commodity.update_time as updateTime,
+			commodity.update_user as updateUser,
+			commodity.picture_id as pictureId,
+			stock.stock as stock
+		FROM commodity, supplier, brand, stock,commodity_type
+		WHERE commodity.commodity_id = stock.commodity_id
+		AND commodity.supplier_id = supplier.supplier_id
+		AND commodity.brand_id = brand.brand_id
+		AND commodity.type = commodity_type.commodity_type_id
+	    <isNotEmpty  property="commodityTypeId">
+		AND commodity_type.commodity_type_id=#commodityTypeId#
+		</isNotEmpty>
+		<isNotEmpty   property="commodityName">
+		AND commodity.commodity_name LIKE '%$commodityName$%'
+		</isNotEmpty>
+		ORDER BY cast(stock.stock as signed) 
+	</select>
+	<select id="selectGoodsListByPriceDesc"
+		parameterClass="cn.agriculture.web.form.GoodsForm"
+		resultClass="cn.agriculture.web.form.GoodsForm">
+		SELECT commodity.commodity_id as commodityId,
+			commodity.type as type,
+			commodity_type.commodity_type_id as commodityTypeId,
+			commodity_type.commodity_type_name as commodityTypeName,
+			supplier.supplier_name as supplierName,
+			brand.brand_name as brandName,
+			commodity.commodity_name as commodityName,
+			commodity.weight as weight,
+			commodity.is_gift as isGift,
+			commodity.specifications as specifications,
+			commodity.unit as unit,
+			commodity.benchmark_price as benchmarkPrice,
+			commodity.guide_price as guidePrice,
+			commodity.retail_price as retailPrice,
+			commodity.competition_level as competitionLevel,
+			commodity.note as note,
+			commodity.update_time as updateTime,
+			commodity.update_user as updateUser,
+			commodity.picture_id as pictureId,
+			stock.stock as stock
+		FROM commodity, supplier, brand, stock,commodity_type
+		WHERE commodity.commodity_id = stock.commodity_id
+		AND commodity.supplier_id = supplier.supplier_id
+		AND commodity.brand_id = brand.brand_id
+		AND commodity.type = commodity_type.commodity_type_id
+		<isNotEmpty  property="commodityTypeId">
+		AND commodity_type.commodity_type_id=#commodityTypeId#
+		</isNotEmpty>
+		<isNotEmpty   property="commodityName">
+		AND commodity.commodity_name LIKE '%$commodityName$%'
+		</isNotEmpty>
+		ORDER BY cast(commodity.retail_price as signed) DESC
+	</select>
+		<select id="selectGoodsListByPrice"
+		parameterClass="cn.agriculture.web.form.GoodsForm"
+		resultClass="cn.agriculture.web.form.GoodsForm">
+		SELECT commodity.commodity_id as commodityId,
+			commodity.type as type,
+			commodity_type.commodity_type_id as commodityTypeId,
+			commodity_type.commodity_type_name as commodityTypeName,
+			supplier.supplier_name as supplierName,
+			brand.brand_name as brandName,
+			commodity.commodity_name as commodityName,
+			commodity.weight as weight,
+			commodity.is_gift as isGift,
+			commodity.specifications as specifications,
+			commodity.unit as unit,
+			commodity.benchmark_price as benchmarkPrice,
+			commodity.guide_price as guidePrice,
+			commodity.retail_price as retailPrice,
+			commodity.competition_level as competitionLevel,
+			commodity.note as note,
+			commodity.update_time as updateTime,
+			commodity.update_user as updateUser,
+			commodity.picture_id as pictureId,
+			stock.stock as stock
+		FROM commodity, supplier, brand, stock,commodity_type
+		WHERE commodity.commodity_id = stock.commodity_id
+		AND commodity.supplier_id = supplier.supplier_id
+		AND commodity.brand_id = brand.brand_id
+		AND commodity.type = commodity_type.commodity_type_id
+		<isNotEmpty  property="commodityTypeId">
+		AND commodity_type.commodity_type_id=#commodityTypeId#
+		</isNotEmpty>
+		<isNotEmpty   property="commodityName">
+		AND commodity.commodity_name LIKE '%$commodityName$%'
+		</isNotEmpty>
+		ORDER BY cast(commodity.retail_price as signed)
+	 
+	</select>
+	<select id="selectGoodsListLimit"
+		parameterClass="cn.agriculture.web.form.GoodsForm"
+		resultClass="cn.agriculture.web.form.GoodsForm">
+		SELECT commodity.commodity_id as commodityId,
+			commodity.type as type,
+			commodity_type.commodity_type_id as commodityTypeId,
+			commodity_type.commodity_type_name as commodityTypeName,
+			supplier.supplier_name as supplierName,
+			brand.brand_name as brandName,
+			commodity.commodity_name as commodityName,
+			commodity.weight as weight,
+			commodity.is_gift as isGift,
+			commodity.specifications as specifications,
+			commodity.unit as unit,
+			commodity.benchmark_price as benchmarkPrice,
+			commodity.guide_price as guidePrice,
+			commodity.retail_price as retailPrice,
+			commodity.competition_level as competitionLevel,
+			commodity.note as note,
+			commodity.update_time as updateTime,
+			commodity.update_user as updateUser,
+			commodity.picture_id as pictureId,
+			stock.stock as stock
+		FROM commodity, supplier, brand, stock,commodity_type
+		WHERE commodity.commodity_id = stock.commodity_id
+		AND commodity.supplier_id = supplier.supplier_id
+		AND commodity.brand_id = brand.brand_id
+		AND commodity.type = commodity_type.commodity_type_id
+		AND commodity_type.commodity_type_id=#commodityTypeId#
+	</select>
+	
+	<select id="selectTypeList"
+		parameterClass="cn.agriculture.web.form.GoodsForm"
+		resultClass="cn.agriculture.web.form.GoodsForm">
+		SELECT commodity.commodity_id as commodityId,
+			commodity.type as type,
+			commodity_type.commodity_type_id as commodityTypeId,
+			commodity_type.commodity_type_name as commodityTypeName,
+			supplier.supplier_name as supplierName,
+			brand.brand_name as brandName,
+			commodity.commodity_name as commodityName,
+			commodity.weight as weight,
+			commodity.is_gift as isGift,
+			commodity.specifications as specifications,
+			commodity.unit as unit,
+			commodity.benchmark_price as benchmarkPrice,
+			commodity.guide_price as guidePrice,
+			commodity.retail_price as retailPrice,
+			commodity.competition_level as competitionLevel,
+			commodity.note as note,
+			commodity.update_time as updateTime,
+			commodity.update_user as updateUser,
+			commodity.picture_id as pictureId,
+			stock.stock as stock
+		FROM commodity, supplier, brand, stock,commodity_type
+		WHERE commodity.commodity_id = stock.commodity_id
+		AND commodity.supplier_id = supplier.supplier_id
+		AND commodity.brand_id = brand.brand_id
+		AND commodity.type = commodity_type.commodity_type_id
+		AND commodity.type = #commodityTypeId#
+	</select>
+	
+	<select id="selectGoodsListrelative"
+		parameterClass="cn.agriculture.web.form.GoodsForm"
+		resultClass="cn.agriculture.web.form.GoodsForm">
+		SELECT commodity.commodity_id as commodityId,
+			commodity.type as commodityTypeId,
+			supplier.supplier_name as supplierName,
+			brand.brand_name as brandName,
+			commodity.commodity_name as commodityName,
+			commodity.weight as weight,
+			commodity.is_gift as isGift,
+			commodity.specifications as specifications,
+			commodity.unit as unit,
+			commodity.benchmark_price as benchmarkPrice,
+			commodity.guide_price as guidePrice,
+			commodity.retail_price as retailPrice,
+			commodity.competition_level as competitionLevel,
+			commodity.note as note,
+			commodity.update_time as updateTime,
+			commodity.update_user as updateUser,
+			commodity.picture_id as pictureId,
+			stock.stock as stock
+		FROM commodity, supplier, brand, stock
+		WHERE commodity.commodity_id = stock.commodity_id
+		AND commodity.supplier_id = supplier.supplier_id
+		AND commodity.brand_id = brand.brand_id
+		AND commodity.commodity_name LIKE '%$commodityName$%'
+	</select>
+	<select id="selectGoods"
+		parameterClass="cn.agriculture.web.form.GoodsForm"
+		resultClass="cn.agriculture.web.form.GoodsForm">
+		SELECT commodity.commodity_id as commodityId,
+			commodity.type as commodityTypeId,
+			supplier.supplier_name as supplierName,
+			brand.brand_name as brandName,
+			commodity.commodity_name as commodityName,
+			commodity.weight as weight,
+			commodity.is_gift as isGift,
+			commodity.specifications as specifications,
+			commodity.unit as unit,
+			commodity.benchmark_price as benchmarkPrice,
+			commodity.guide_price as guidePrice,
+			commodity.retail_price as retailPrice,
+			commodity.competition_level as competitionLevel,
+			commodity.note as note,
+			commodity.update_time as updateTime,
+			commodity.update_user as updateUser,
+			commodity.picture_id as pictureId,
+			commodity.picture1_id as pictureId1,
+			commodity.picture2_id as pictureId2,
+			commodity.picture3_id as pictureId3,
+			commodity.picture4_id as pictureId4,
+			commodity.picture5_id as pictureId5,
+			commodity.picture6_id as pictureId6,
+			stock.stock as stock,
+			commodity_type.commodity_type_id as commodityTypeId,
+			commodity_type.commodity_type_name as commodityTypeName
+		FROM commodity, supplier, brand, stock,commodity_type
+		WHERE commodity.commodity_id = stock.commodity_id
+		AND commodity.supplier_id = supplier.supplier_id
+		AND commodity.brand_id = brand.brand_id
+		AND commodity.type = commodity_type.commodity_type_id
+		AND commodity.commodity_id = #commodityId#
+	</select>
+	<select id="selectType"
+		resultClass="cn.agriculture.web.form.GoodsForm">
+		SELECT commodity_type_name as commodityTypeName,
+				commodity_type_id as commodityTypeId
+		FROM commodity_type
+	</select>
+</sqlMap>

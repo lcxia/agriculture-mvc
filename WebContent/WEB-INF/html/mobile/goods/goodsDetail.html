@@ -1,0 +1,148 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>好农易商城</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, maximum-scale=1" />
+<link href="mobile/css/style2.css" rel="stylesheet" />
+<script type="text/javascript" src="js/Jscript.js"></script>
+<link rel="stylesheet" href="mobile/css/style.css" type="text/css"
+	media="all" />
+	<script type="text/javascript">
+	function addNum() {
+		document.getElementById("count").value=parseInt(document.getElementById("count").value) + 1;
+	}
+	function subNum() {
+
+		if (document.getElementById("count").value=="1") {
+			return;
+		}
+
+		document.getElementById("count").value=parseInt(document.getElementById("count").value) - 1;
+	}
+	</script>
+</head>
+<body>
+	<div class="wrap">
+		<div class="header-bg">
+			<div class="h-bg">
+				<div class="total">
+					<div class="header">
+						<div class="box_header_user_menu">
+						
+						
+						<div th:replace="mobile/userBar :: page-user-bar"></div>
+							<!--<jsp:include page="/WEB-INF/jsp/mobile/userBar.jsp"></jsp:include> -->
+						</div>
+						<div class="clear"></div>
+					</div>
+					<div class="header-bot">
+			
+					    <div th:replace="mobile/logo :: page-logo"></div>
+						<!-- <jsp:include page="/WEB-INF/jsp/mobile/logo.jsp"></jsp:include> -->
+						<nav class="clearfix"> <a href="#Menu">Menu<img
+							class="menu" src="mobile/images/nav-icon.png" title="Menu" /></a>
+						</nav>
+					</div>
+					<div class="header-bottom">
+						<div class="banner-top">
+							<div id="slideshow">
+								
+							</div>
+							<div class="header-para">
+							
+							
+							
+							    <div th:replace="mobile/rightBar :: page-right-bar"></div>
+							<!--	<jsp:include page="/WEB-INF/jsp/mobile/rightBar.jsp"></jsp:include>  -->
+							</div>
+							<div class="header_bottom_right_images">
+							
+							
+							<form name="goodsForm" th:object="${goodsForm}" action="addCart" method="post">
+							<input type="hidden" name="commodityId" th:value="${goodsForm.commodityId}"/>
+								<!-- <form:form modelAttribute="goodsForm" action="addCart"
+									method="post">
+									<form:hidden path="commodityId" value="${goodsForm.commodityId}"/>-->
+									<div class="about_wrapper"> 
+										<h1>
+											商品详细信息<br/>
+											<span th:errors="${goodsForm.*}"></span>
+										    <span th:text="${message}"></span>
+											<!-- ${message}<form:errors path="*"></form:errors> -->
+										</h1>
+									</div>
+									<div class="about-top">
+
+										<div class="grid images_3_of_1">
+											<div id="tFocus">
+	<div class="prev" id="prev"></div>
+	<div class="next" id="next"></div>
+	<ul id="tFocus-pic">
+		<li><img alt="商品详细情况" th:src="@{showImage(pictureId=${goodsForm.pictureId})}" style="height:185px;width:325px;" /></li>
+		<li><img alt="商品详细情况" th:src="@{showImage(pictureId=${goodsForm.pictureId1})}" style="height:185px;width:325px;" /></li>
+		<li><img alt="商品详细情况" th:src="@{showImage(pictureId=${goodsForm.pictureId2})}" style="height:185px;width:325px;" /></li>
+		<li><img alt="商品详细情况" th:src="@{showImage(pictureId=${goodsForm.pictureId3})}" style="height:185px;width:325px;" /></li>
+		<li><img alt="商品详细情况" th:src="@{showImage(pictureId=${goodsForm.pictureId4})}" style="height:185px;width:325px;" /></li>
+		</ul>
+	<div id="tFocusBtn">
+		<a href="javascript:void(0);" id="tFocus-leftbtn">上一张</a>
+		<div id="tFocus-btn">
+			<ul>
+				<li class="active"><img alt="商品详细情况" th:src="@{showImage(pictureId=${goodsForm.pictureId})}" style= "height:54px;width:57px;"/></li>
+				<li><img alt="商品详细情况" th:src="@{showImage(pictureId=${goodsForm.pictureId1})}" style="height:54px;width:81px;" /></li>
+		        <li><img alt="商品详细情况" th:src="@{showImage(pictureId=${goodsForm.pictureId2})}" style="height:54px;width:81px;" /></li>
+		        <li><img alt="商品详细情况" th:src="@{showImage(pictureId=${goodsForm.pictureId3})}" style="height:54px;width:81px;" /></li>
+		        <li><img alt="商品详细情况" th:src="@{showImage(pictureId=${goodsForm.pictureId4})}" style="height:54px;width:81px;" /></li>	
+			</ul>
+		</div>
+		<a href="javascript:void(0);" id="tFocus-rightbtn">下一张</a>
+	</div>
+</div><!--tFocus end-->
+<script type="text/javascript">addLoadEvent(Focus());</script>
+										</div>
+										<div class="clear"></div>
+										<div class="grid span_2_of_3" >
+											<h3 th:text="${goodsForm.commodityName}"></h3>
+											<p>品牌：<span th:text="${goodsForm.brandName}"></span></p>
+											<p>经销商：<span th:text="${goodsForm.supplierName}"></span></p>
+											<p>规格：每<span th:text="${goodsForm.unit}"></span><span th:text="${goodsForm.specifications}"></span></p>
+											<p>零售价：<span th:text="${goodsForm.retailPrice}"></span>元</p>
+											<p>库存：<span th:text="${goodsForm.stock}"></span></p>
+											<p>
+												<input type="button" onclick="subNum();" value="-" />
+												<input style="width:40px;" name="count" id="count" type="text" value="1"/>
+												<input type="button" onclick="addNum();" value="+" />
+												<button class="button"><span>加入购物车</span></button>
+											</p>
+										</div>
+										<div class="clear"></div>
+										<img alt="商品详细情况" th:src="@{showImage(pictureId=${goodsForm.pictureId5})}" style="height:185px;width:330px;" />
+										<div calss="clear"></div>
+										<img alt="商品详细情况" th:src="@{showImage(pictureId=${goodsForm.pictureId6})}" style="height:185px;width:330px;" />
+										<div class="clear"></div>
+									</div>
+									<div class="clear"></div>
+								</form>
+							</div>
+							<div class="clear"></div>
+							<div class="navgation-links">
+								<a name="Menu"> </a>
+								<div th:replace="mobile/topBar :: page-top-bar"></div>
+								<!-- <jsp:include page="/WEB-INF/jsp/mobile/topBar.jsp"></jsp:include> -->
+							</div>
+							<div class="footer-bottom">
+								<div class="copy">
+								<div th:replace="mobile/copyRight :: page-copy-right"></div>
+									<!-- <jsp:include page="/WEB-INF/jsp/mobile/copyRight.jsp"></jsp:include> -->
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

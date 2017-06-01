@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap
+            PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+            "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<!-- SqlMap定義 -->
+<sqlMap namespace="Delivery">
+	<select id="selectDeliveryList"
+		parameterClass="cn.agriculture.web.form.DeliveryForm"
+		resultClass="cn.agriculture.web.form.DeliveryForm">
+		SELECT place_order_id as placeOrderId,
+			storage as storage,
+			transport_mode as transportMode,
+			guest_from as guestFrom,
+			guest_company as guestCompany,
+			province_id as provinceId,
+			city_id as cityId,
+			address as address,
+			contacts as contacts,
+			mobile as mobile,
+			zip as zip,
+			telephone as telephone,
+			order_date as orderDate,
+			note as note,
+			amount as amount,
+			update_time as updateTime,
+			update_user as updateUser,
+			user_id as userId,
+			status as status
+		FROM place_order
+	</select>
+
+	<select id="selectDeliveryForDetail"
+		parameterClass="cn.agriculture.web.form.DeliveryForm"
+		resultClass="cn.agriculture.web.form.DeliveryForm">
+		SELECT place_order.place_order_id as placeOrderId,
+			place_order.storage as storage,
+			express.express_id as expressId,
+			express.express_name as transportMode,
+			place_order.guest_from as guestFrom,
+			place_order.guest_company as guestCompany,
+			province.province_id as provinceId,
+			province.province_name as provinceName,
+			city.city_id as cityId,
+			city.city_name as cityName,
+			place_order.address as address,
+			place_order.contacts as contacts,
+			place_order.mobile as mobile,
+			place_order.zip as zip,
+			place_order.telephone as telephone,
+			place_order.order_date as orderDate,
+			place_order.note as note,
+			place_order.amount as amount,
+			place_order.update_time as updateTime,
+			place_order.update_user as updateUser,
+			place_order.user_id as userId,
+			place_order.status as status,
+			express_list.express_list_id as expressListId
+		FROM place_order LEFT JOIN express_list ON place_order.place_order_id = express_list.order_id, province, city, express
+		WHERE place_order.province_id = province.province_id
+		AND place_order.city_id = city.city_id
+		AND place_order.transport_mode = express.express_id
+		AND place_order_id = #placeOrderId#
+	</select>
+
+	<select id="selectExpressPrice" parameterClass="cn.agriculture.web.form.ExpressPriceForm"
+		resultClass="cn.agriculture.web.form.ExpressPriceForm">
+		SELECT separate_weight as separateWeight,
+			first_heavy_price as firstHeavyPrice,
+			continued_heavy_price as continuedHeavyPrice
+		FROM express_price
+		WHERE express_id = #expressId#
+		AND province_id = #provinceId#
+	</select>
+
+	<select id="selectExpressListList" resultClass="cn.agriculture.web.form.ExpressListForm">
+		SELECT express_list_id as expressListId
+		FROM express_list
+		WHERE is_used ='未使用'
+		AND express_id = #expressId#
+	</select>
+	
+	<select id="selectExpressList" 
+		parameterClass="java.lang.String"
+		resultClass="cn.agriculture.web.form.ExpressListForm">
+		SELECT express_id as expressId
+		FROM express_list
+		WHERE express_list_id = #value#
+	</select>
+
+	<update id="submitDelivery" parameterClass="cn.agriculture.web.form.DeliveryForm">
+		UPDATE place_order SET status = #status#,
+		update_time = #updateTime#,
+		update_user = #updateUser#
+		WHERE place_order_id = #placeOrderId#
+	</update>
+	
+	<update id="editExpressList" parameterClass="cn.agriculture.web.form.DeliveryForm">
+		UPDATE express_list SET is_used = #isUsed#,
+		order_id = #placeOrderId#,
+		used_date = #updateTime#,
+		update_time = #updateTime#,
+		update_user = #updateUser#
+		WHERE express_list_id = #expressListId#
+	</update>
+
+</sqlMap>

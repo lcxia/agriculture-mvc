@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap
+            PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+            "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<!-- SqlMap定義 -->
+<sqlMap namespace="PlaceOrderDetail">
+	<select id="selectPlaceOrderDetailList"
+		parameterClass="cn.agriculture.web.form.PlaceOrderDetailForm"
+		resultClass="cn.agriculture.web.form.PlaceOrderDetailForm">
+		SELECT place_order_detail.place_order_detail_id as placeOrderDetailId,
+			place_order_detail.place_order_id as placeOrderId,
+			place_order_detail.commodity_id as commodityId,
+			commodity.brand_id as brandId,
+			brand.brand_name as brandName,
+			commodity.commodity_name as commodityName,
+			commodity.weight as weight,
+			commodity.specifications as specifications,
+			commodity.unit as unit,
+			commodity.benchmark_price as benchmarkPrice,
+			commodity.guide_price as guidePrice,
+			commodity.retail_price as retailPrice,
+			place_order_detail.note as note,
+			stock.stock as stock,
+			place_order_detail.purchase_count as purchaseCount,
+			place_order_detail.update_time as updateTime,
+			place_order_detail.update_user as updateUser
+		FROM place_order_detail, commodity, brand, stock
+		WHERE place_order_detail.commodity_id = commodity.commodity_id
+		AND commodity.brand_id = brand.brand_id
+		AND commodity.commodity_id = stock.commodity_id
+		AND place_order_detail.place_order_id = #placeOrderId#
+	</select>
+
+	<select id="selectPlaceOrderDetail"
+		parameterClass="cn.agriculture.web.form.PlaceOrderDetailForm"
+		resultClass="cn.agriculture.web.form.PlaceOrderDetailForm">
+		SELECT place_order_detail.place_order_detail_id as placeOrderDetailId,
+			place_order_detail.place_order_id as placeOrderId,
+			place_order_detail.commodity_id as commodityId,
+			commodity.brand_id as brandId,
+			brand.brand_name as brandName,
+			brand.supplier_id as supplierId,
+			supplier.supplier_name as supplierName,
+			commodity.commodity_name as commodityName,
+			commodity.weight as weight,
+			commodity.specifications as specifications,
+			commodity.unit as unit,
+			commodity.benchmark_price as benchmarkPrice,
+			commodity.guide_price as guidePrice,
+			commodity.retail_price as retailPrice,
+			place_order_detail.note as note,
+			stock.stock as stock,
+			place_order_detail.purchase_count as purchaseCount,
+			place_order_detail.update_time as updateTime,
+			place_order_detail.update_user as updateUser
+		FROM place_order_detail, commodity, brand, supplier, stock
+		WHERE place_order_detail.commodity_id = commodity.commodity_id
+		AND commodity.brand_id = brand.brand_id
+		AND brand.supplier_id = supplier.supplier_id
+		AND commodity.commodity_id = stock.commodity_id
+		AND place_order_detail.place_order_detail_id = #placeOrderDetailId#
+	</select>
+
+	<select id="getSeq" resultClass="java.lang.Integer">
+		SELECT _nextval('placeOrderDetailId')
+	</select>
+
+	<insert id="addPlaceOrderDetail" parameterClass="cn.agriculture.web.form.PlaceOrderDetailForm">
+		INSERT INTO place_order_detail(place_order_detail_id, place_order_id, commodity_id, note, purchase_count, update_time, update_user)
+		VALUES(#placeOrderDetailId#, #placeOrderId#, #commodityId#, #note#, #purchaseCount#, #updateTime#, #updateUser#)
+	</insert>
+	
+	<update id="editPlaceOrderDetail" parameterClass="cn.agriculture.web.form.PlaceOrderDetailForm">
+		UPDATE place_order_detail SET place_order_id = #placeOrderId#,
+			commodity_id = #commodityId#,
+			note = #note#,
+			purchase_count = #purchaseCount#,
+			update_time = #updateTime#,
+			update_user = #updateUser#
+		WHERE place_order_detail_id = #placeOrderDetailId#
+	</update>
+	
+	<delete id="delPlaceOrderDetail" parameterClass="cn.agriculture.web.form.PlaceOrderDetailForm">
+		DELETE FROM place_order_detail
+		WHERE 1 = 1  
+		<isNotEmpty property="placeOrderDetailId">
+		AND place_order_detail_id = #placeOrderDetailId#
+		</isNotEmpty>
+		<isNotEmpty property="placeOrderId">
+		AND place_order_id = #placeOrderId#
+		</isNotEmpty>
+	</delete>
+
+	<select id="selectCommodityAndStock"
+		parameterClass="java.lang.String"
+		resultClass="cn.agriculture.web.form.PlaceOrderDetailForm">
+		SELECT commodity.brand_id as brandId,
+			brand.brand_name as brandName,
+			commodity.commodity_name as commodityName,
+			commodity.weight as weight,
+			commodity.specifications as specifications,
+			commodity.unit as unit,
+			commodity.benchmark_price as benchmarkPrice,
+			commodity.guide_price as guidePrice,
+			commodity.retail_price as retailPrice,
+			stock.stock as stock
+		FROM commodity LEFT JOIN stock ON commodity.commodity_id = stock.commodity_id, brand
+		WHERE commodity.brand_id = brand.brand_id
+		AND commodity.commodity_id = #value#
+	</select>
+
+</sqlMap>

@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap
+            PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+            "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<!-- SqlMap定義 -->
+<sqlMap namespace="User">
+	<select id="selectUser"
+		parameterClass="cn.agriculture.web.form.UserForm"
+		resultClass="cn.agriculture.web.form.UserForm">
+		SELECT
+		user_id as userId,
+		user_name as userName,
+		id_card as idCard,
+		birthday as birthday,
+		gender as gender,
+		company_name as companyName,
+		address as address,
+		email as email,
+		telephone as telephone,
+		department as department,
+		position as position,
+		update_time as updateTime,
+		update_user as updateUser
+		FROM
+		user
+		WHERE
+		user_id = #userId#
+		AND password = #password#
+	</select>
+
+	<select id="selectDistributor"
+		parameterClass="cn.agriculture.web.form.UserForm"
+		resultClass="cn.agriculture.web.form.UserForm">
+		SELECT
+		distributor_id as userId,
+		distributor_name as userName,
+		password as password,
+		address as address,
+		email as email,
+		telephone as telephone,
+		update_time as updateTime,
+		update_user as updateUser,
+		price_increment as priceIncrement,
+		amount as amount
+		FROM
+		distributor
+		WHERE
+		distributor_id = #userId#
+		AND password = #password#
+	</select>
+
+	<insert id="addUser" parameterClass="cn.agriculture.web.form.UserForm">
+		INSERT INTO user(user_id, user_name, password, id_card, birthday, gender, company_name, address, email, telephone, department, position, update_time, update_user) 
+		VALUES(#userId#, #userName#, #password#, #idCard#, IF(#birthday#='',null, #birthday#), #gender#, #companyName#, #address#, #email#, #telephone#, #department#, #position#, #updateTime#, #updateUser#)
+	</insert>
+	
+	<update id="editUser" parameterClass="cn.agriculture.web.form.UserForm">
+		UPDATE user SET
+			user_name=#userName#,
+			password=#password#,
+			id_card=#idCard#,
+			birthday=IF(#birthday#='',null, #birthday#),
+			gender=#gender#,
+			company_name=#companyName#,
+			address=#address#,
+			email=#email#,
+			telephone=#telephone#,
+			department=#department#,
+			position=#position#,
+			update_time=#updateTime#,
+			update_user=#updateUser#
+		WHERE user_id=#userId#
+	</update>
+</sqlMap>

@@ -1,0 +1,106 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" lang="en">
+	<head>
+		<meta charset="UTF-8"/>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1"/>
+	<title>好农易</title>
+	<link href="css1/bootstrap.min.css" rel="stylesheet"/>
+	<link href="css1/style.css" rel="stylesheet"/>
+	<!--[if lt IE 9]>
+		<script src="js/html5.js"></script>
+		<script src="js/respond.min.js"></script>
+	<![endif]-->
+</head>
+<body>
+	<div class="top">
+		<div th:replace="mobile/topBar :: page-top-bar"></div>
+	</div>
+	<!-- top over -->
+
+	<div class="header">
+	<div th:replace="mobile/header :: page-header"></div>
+	</div>
+	<!-- header over -->
+
+	<div class="navBox yh">
+		<div th:replace="mobile/menu :: page-menu"></div>
+	</div>
+	<!-- nav over -->
+
+	<div class="container main">
+		<p class="breadNav"><a href="@{initIndex}">首页</a><i>&gt;</i>个人中心</p>
+
+		<div class="row">
+			<div class="col-md-2 ceterL">
+				<ul class="centerMenu cf ">
+					<li ><a href="order">我的订单</a><i></i></li>
+					<li class="curr"><a href="initCart">我的购物车</a><i></i></li>
+					<li><a href="initReceive">地址管理</a><i></i></li>
+				</ul>
+			</div>
+			
+			<div class="col-md-10 ceterR">
+				<ul class="progressBar cf mt15">
+					<li class="curr"><i class="yh">1</i>我的购物车</li>
+					<li class="curr"><i class="yh">2</i>填写收货地址并支付</li>
+					<li><i class="yh">3</i>下单成功</li>
+				</ul>	
+				<h4 class="yh detailsT"><span   class="red" style="font-size:medium" th:text="${message}"></span></h4>		 
+			 <form name="alipayForm" action="alipaySubmit" th:object="${alipayForm}" method="post" class="form-horizontal form-address mt20">
+			    <input type="hidden" name="outTradeNo" value="" th:value="${alipayForm.outTradeNo}"/>
+				<input type="hidden" name="subject" value="" th:value="${alipayForm.subject}"/>
+				<input type="hidden" name="body" value="" th:value="${alipayForm.body}"/>
+				<input type="hidden" name="price" value="" th:value="${alipayForm.price}"/>
+				<input type="hidden" name="showUrl" value="" th:value="${alipayForm.showUrl}"/>									
+				<ul>
+					<li th:each="cartForm,status:${alipayForm.cartFormList}">
+						<input type="hidden" th:name="${#strings.concat('cartFormList[').concat(status.index).concat('].cartId')}" th:value="${cartForm.cartId}"/>
+					</li>
+				</ul>
+			    <div class="table-responsive mt20">
+			      	<table class="table table-order table-cart table-address">
+				       	<thead>
+				         	<tr>
+				         		<th class="wp15"><p class="tl ml20">姓名</p></th>
+					           	<th class="wp40">收货地址</th>
+					           	<th class="wp10">邮编</th>
+					           	<th class="wp15">手机号码</th>
+				         	</tr>
+				       	</thead>				       	
+				       	<tbody>
+					    <tr th:each="receiveInfo,status:${list}">				
+					    <td class="chk"><input type="radio" name="addressId" class="vm" th:value="${receiveInfo.addressId}" th:checked="${addressDefault}==${receiveInfo.addressId}"/>
+				       	<span  th:text="${receiveInfo.receiveName}"></span></td>
+				       	<td><span th:text="${receiveInfo.addressName}"></span></td>
+				       	<td><span th:text="${receiveInfo.post}"></span></td>
+				       	<td><span th:text="${receiveInfo.mobile}"></span></td>      
+				       	</tr>		         				         	
+				       	</tbody>
+			       </table>
+			    </div>
+				<p class="tr mt20"><button class="btnBlue yh">去支付</button></p>
+				  </form> 
+			    <!-- 填写收货地址并支付 over -->
+			    
+			</div>
+		</div>
+		
+		
+	</div>
+	<!-- 个人中心 over -->
+
+	<footer class="foot mt20 tc">
+		<div th:replace="mobile/footer :: page-footer"></div>	
+	</footer>
+	<!--footer over  -->
+
+	<script src="js1/jquery-1.11.3.min.js"></script>
+	<script src="js1/bootstrap.min.js"></script>
+	<script src="js1/jquery-latest.min.js"></script>
+	<script src="js1/unslider.min.js"></script>
+	<script src="js1/jquery.event.move.js"></script>
+	<script src="js1/jquery.event.swipe.js"></script>
+	<script src="js1/comm.js"></script>
+</body>
+</html>

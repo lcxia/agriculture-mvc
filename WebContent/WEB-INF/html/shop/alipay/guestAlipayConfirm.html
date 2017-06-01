@@ -1,0 +1,116 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>好农易商城</title>
+<link href="shop/css/style.css" rel="stylesheet" type="text/css" media="all" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<script src="shop/js/jquery.min.js"></script>
+<link rel="shortcut icon" href="shop/images/pic28.jpg"/>
+<link rel="Bookmark" href="shop/images/pic28.jpg"/>
+</head>
+<body>
+	<div class="header-bg">
+		<div class="wrap">
+			<div class="h-bg">
+				<div class="total">
+					<div class="header">
+						<div class="box_header_user_menu">
+							<ul class="user_menu">
+								<div th:replace="shop/userBar :: page-user-bar"></div>
+							</ul>
+						</div>
+						<div class="clear"></div>
+						<div class="header-bot">
+							<div th:replace="shop/logo :: page-logo"></div>
+						</div>
+					</div>
+					<div class="clear"></div>
+					<div class="menu">
+						<div th:replace="shop/topBar :: page-top-bar"></div>
+					</div>
+					<div class="banner-top">
+						<div class="header-bottom">
+							<div class="header_bottom_right_images">
+								<div class="about_wrapper">
+									<h1>
+										您现在是匿名购买该商品，请认真填写以下每项内容以保证商品能够顺利到达您的手中。 
+										<span th:errors="${alipayForm.*}"></span>
+										<span th:text="${message}"></span>
+									</h1>
+                               </div>
+							<form action="guestAlipaySubmit" th:object="${alipayForm}"
+										method="post">
+										<input name="outTradeNo" type="hidden"  th:value="${alipayForm.outTradeNo}" />
+										<input name="subject" type="hidden"  th:value="${alipayForm.subject}" />
+										<input name="body" type="hidden" th:value="${alipayForm.body}" />
+										<input name="price" type="hidden"  th:value="${alipayForm.price}" />
+										<input name="showUrl" type="hidden"  th:value="${alipayForm.showUrl}" />
+										<input name="commodityId" type="hidden" th:value="${alipayForm.commodityId}" />
+										<input name="guestId" type="hidden"  th:value="${alipayForm.guestId}" />
+										<input name="count"  type="hidden" th:value="${alipayForm.count}" />
+							<div class="section group">
+									<div class="col span_2_of_c">
+										<div class="contact-form">
+											<h3>订单信息</h3>
+											<div>
+												<span><label>商品信息</label></span> <span th:text="${alipayForm.body}"></span>
+											</div>
+											<div>
+												<span><label>价格</label></span> <span th:text="${alipayForm.price}"></span>
+											</div>
+											<div>
+												<span><label>收货人姓名
+												<span style="display: inline; color: red;">*</span></label></span> 
+												<span><input name="receiveName" type="text" /></span>
+											</div>
+											<div>
+												<span><label>收货人地址
+												<span style="display: inline; color: red;">*</span></label></span> 
+												<span><input name="receiveAddress" type="text" /></span>
+											</div>
+											<div>
+												<span><label>收货人邮编
+												<span style="display: inline; color: red;">*</span></label></span> 
+												<span><input name="receiveZip" type="text" /></span>
+											</div>
+											<div>
+												<span><label>收货人电话号码
+												<span style="display: inline; color: red;">*</span></label></span> 
+												<span><input name="receivePhone" type="text" /></span>
+											</div>
+											<div>
+												<span><label>收货人手机号码
+												<span style="display: inline; color: red;">*</span></label></span> 
+												<span><input name="receiveMobile" type="text" /></span>
+											</div>
+										</div>
+									</div>
+									<div class="clear"></div>
+								</div>
+								<div class="clear"></div>
+								<button class="button">
+									<span>登录支付宝结账</span>
+								</button>
+                               </form>
+
+							</div>
+							<div class="header-para">
+								<div th:replace="shop/rightBar :: page-right-bar"></div>
+
+							</div>
+							<div class="clear"></div>
+							<div class="footer-bottom">
+								<div class="copy">
+									<div th:replace="shop/copyRight :: page-copy-right"></div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+</body>
+</html>

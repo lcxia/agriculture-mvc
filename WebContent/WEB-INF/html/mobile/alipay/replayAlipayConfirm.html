@@ -1,0 +1,97 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>好农易商城</title>
+<meta charset="UTF-8"/>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, maximum-scale=1" />
+<link rel="stylesheet" href="mobile/css/style.css" type="text/css"
+	media="all" />
+<div th:if="${#strings.isEmpty(session.UVO.guestName)}">
+	<meta http-equiv="REFRESH" content="0;url=initGuestLogin" />
+</div>
+</head>
+<body>
+	<div class="wrap">
+		<div class="header-bg">
+			<div class="h-bg">
+				<div class="total">
+					<div class="header">
+						<div class="box_header_user_menu">
+							<div th:replace="mobile/userBar:: page-user-bar"></div>
+						</div>
+						<div class="clear"></div>
+					</div>
+					<div class="header-bot">
+						<div th:replace="mobile/logo:: page-logo"></div>
+						<nav class="clearfix"> <a href="#Menu">Menu<img
+							class="menu" src="mobile/images/nav-icon.png" title="Menu" /></a>
+						</nav>
+					</div>
+					<div class="header-bottom">
+						<div class="banner-top">
+							<div id="slideshow">
+								
+							</div>
+							<div class="header-para">
+								<div th:replace="mobile/rightBar :: page-right-bar"></div>
+							</div>
+						
+							<div class="header_bottom_right_images">
+								<form name="alipayForm" th:object="${alipayForm}" action="replayAlipaySubmit"
+									method="post">
+									<input type="hidden" name="outTradeNo" th:value="${alipayForm.outTradeNo}"/>
+									<input type="hidden" name="subject" th:value="${alipayForm.subject}"/>
+									<input type="hidden" name="body" th:value="${alipayForm.body}"/>
+									<input type="hidden" name="price" th:value="${alipayForm.price}"/>
+									<input type="hidden" name="showUrl" th:value="${alipayForm.showUrl}"/>
+									<input type="hidden" name="receiveName" th:value="${alipayForm.receiveName}"/>
+									<input type="hidden" name="receiveAddress" th:value="${alipayForm.receiveAddress}"/>
+									<input type="hidden" name="receiveZip" th:value="${alipayForm.receiveZip}"/>
+									<input type="hidden" name="receivePhone" th:value="${alipayForm.receivePhone}"/>
+									<input type="hidden" name="receiveMobile" th:value="${alipayForm.receiveMobile}"/>
+									<div class="about_wrapper">
+										<h1>
+											<span th:text="该支付信息取自您登录的个人信息，请确认，如果有问题请您修改您的个人信息。"></span>
+										</h1>
+									</div>
+									
+									<div class="about-top">
+										<div class="grid span_2_of_3">
+										<h3>客户订单号：<span th:text="${alipayForm.outTradeNo}"></span></h3>
+											<p>订单名称：<span th:text="${alipayForm.subject}"></span></p>
+											<p>订单描述：<span th:text="${alipayForm.body}"></span></p>
+											<p>付款金额：<span th:text="${alipayForm.price}"></span></p>
+											<p>商品展示地址：<span th:text="${alipayForm.showUrl}"></span></p>
+											<p>收货人姓名：<span th:text="${alipayForm.receiveName}"></span></p>
+											<p>收货人地址：<span th:text="${alipayForm.receiveAddress}"></span></p>
+											<p>收货人邮编：<span th:text="${alipayForm.receiveZip}"></span></p>
+											<p>收货人电话号码：<span th:text="${alipayForm.receivePhone}"></span></p>
+											<p>收货人手机号码：<span th:text="${alipayForm.receiveMobile}"></span></p>
+										</div>
+										<div class="clear"></div>
+									</div>
+								
+									<div class="clear"></div>
+									<button class="button"><span>登录支付宝结账</span></button>
+								</form>
+							</div>
+							<div class="clear"></div>
+							<div class="navgation-links">
+								<a name="Menu"> </a>
+								<div th:replace="mobile/topBar :: page-top-bar"></div>
+							</div>
+							<div class="footer-bottom">
+								<div class="copy">
+									<div th:replace="mobile/copyRight :: page-copy-right"></div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

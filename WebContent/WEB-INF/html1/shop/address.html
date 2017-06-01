@@ -1,0 +1,217 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8"/>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1"/>
+	<title>好农易</title>
+	<link href="css1/bootstrap.min.css" rel="stylesheet"/>
+	<link href="css1/style.css" rel="stylesheet"/>
+	<!--[if lt IE 9]>
+		<script src="js/html5.js"></script>
+		<script src="js/respond.min.js"></script>
+	<![endif]-->
+</head>
+<body>
+	<div class="top">
+			<div th:replace="shop/topBar::page-top-bar"></div>
+		<!-- 	<p class="userInfo">您好，请 <a href="#" class="link">登录</a><i class="line">|</i><a href="#" class="link">注册</a><i class="line">|</i><a href="#" class="link">分销商入口</a></p>
+		 --></div>
+	<!-- top over -->
+
+	<div class="header">
+			<div th:replace="shop/header :: page-header"></div>
+	</div>
+
+	<div class="navBox yh">
+	<div th:replace="shop/menu :: page-menu"></div>
+	</div>
+	<!-- nav over -->
+
+	<div class="container main">
+		<p class="breadNav"><a href="initIndex">首页</a><i>&gt;</i>个人中心</p>
+
+		<div class="row">
+			<div class="col-md-2 ceterL">
+				<ul class="centerMenu cf ">
+					<li ><a href="order">我的订单</a><i></i></li>
+					<li><a href="initCart">我的购物车</a><i></i></li>
+					<li  class="curr"><a href="initReceive">地址管理</a><i></i></li>
+				</ul>
+			</div>
+			
+			<div class="col-md-10 ceterR">
+				<h4 class="addressT">收货地址</h4>
+				<p class="f14 mt20"><span class="yellow mr10">新增收货</span>电话号码为选填项，其他均为必填项</p>
+			    <form class="form-horizontal form-address mt20"  action="addReceive" th:object="${receiveForm}" method="post">
+				  	<input type="hidden" name="guestId" th:value="${receiveForm.guestId}"/>
+				  	<input type="hidden" name="addressId" th:value="${receiveForm.addressId}"/>
+				  	 <table  >
+				 	<tr style="border:solid 15px;border-color:white">
+					    <td ><i class="red">*</i> <span style="font-size: medium">收货人姓名：</span></td>
+					    <td><input name="receiveName" type="text" class="form-control" th:value="${receiveForm.receiveName}"/></td>
+					    <td><i class="red formInfo" ><span style="font-size: medium" th:errors="${receiveForm.receiveName}"></span></i></td>
+					</tr>
+				  	<tr style="border:solid 15px;border-color:white">
+					    <td><i class="red">*</i><span style="font-size: medium"> 所在地区：</span></td>
+					    <td><input name="addressName" type="text" class="form-control" th:value="${receiveForm.addressName}"/></td>
+					    <td><i class="red formInfo"><span style="font-size: medium" th:errors="${receiveForm.addressName}"></span></i></td>
+					</tr>
+					<tr style="border:solid 15px;border-color:white">
+					    <td><i class="red">*</i><span style="font-size: medium"> 邮政编码：</span></td>
+					    <td><input name="post" type="tel" class="form-control" th:value="${receiveForm.post}"/></td>
+					    <td><i class="red formInfo"><span style="font-size: medium" th:errors="${receiveForm.post}"></span></i></td>
+					</tr>
+					<tr style="border:solid 15px;border-color:white">
+					    <td><span style="font-size: medium">&nbsp;电话号码：</span></td>
+					    <td><input name="phone" type="tel" class="form-control" th:value="${receiveForm.phone}"/></td>
+					    <td><i class="red formInfo"><span style="font-size: medium" th:errors="${receiveForm.phone}"></span></i></td>
+					</tr>
+					<tr style="border:solid 15px;border-color:white">
+					    <td><i class="red">*</i> <span style="font-size: medium">手机号码：</span></td>
+					    <td><input name="mobile" type="tel" class="form-control" th:value="${receiveForm.mobile}"/></td>
+					    <td><i class="red formInfo"><span style="font-size: medium" th:errors="${receiveForm.mobile}"></span></i></td>
+					</tr>
+                    <tr>				   
+					   <td><span style="font-size: medium">&nbsp;设为默认：</span></td>
+					    <td style="align:left"><input type="checkbox" name="check"  style="text-align:left"/>
+					    </td>
+					</tr>
+					</table>	
+					<div class="form-group">
+					    <div class="col-sm-offset-2 col-sm-10">
+					     	<button type="submit" class="btnYellow yh">保 存</button>
+					    </div>
+				  	</div>			
+				</form>	
+				<!-- 新增地址 -->
+
+				<div class="table-responsive mt30">
+			      	<table class="table table-order table-cart table-address">
+				       	<thead>
+				         	<tr>
+				         		<th class="wp15">姓名</th>
+					           	<th class="wp40">收货地址</th>
+					           	<th class="wp10">邮编</th>
+					           	<th class="wp15">手机号码</th>
+					           	<th class="wp20">操作</th>
+				         	</tr>
+				       	</thead>
+				       	<tbody>
+				       	<tr th:each="receiveInfo,status:${list}">
+				       	<td><span th:text="${receiveInfo.receiveName}"></span></td>
+				       	<td><span th:text="${receiveInfo.addressName}"></span></td>
+				       	<td><span th:text="${receiveInfo.post}"></span></td>
+				       	<td><span th:text="${receiveInfo.mobile}"></span></td>
+				       	<td>
+					           		<a th:href="@{defaultAddress(addressId=${receiveInfo.addressId})}" class="link mr10" th:if="${receiveInfo.addressId}!=${addressDefault}">设为默认地址</a>
+					           		<a th:href="@{initEditReceive(addressId=${receiveInfo.addressId})}" class="link mr10">修改</a>
+					           		<a th:href="@{deleteReceive(addressId=${receiveInfo.addressId})}" class="link">删除</a>
+					    </td>
+				       	</tr>
+				         	<!-- <tr>
+				         		<td>四字姓名</td>
+					           	<td>广东省深圳市南山区学苑大道1001号南山智园B1栋19、20楼,广东盛大网络发展有限公司</td>
+					           	<td>201203 </td>
+					           	<td>18602189986</td>
+					           	<td>
+					           		<span class="red mr10">默认地址</span>
+					           		<a href="#" class="link mr10">修改</a>
+					           		<a href="#" class="link">删除</a>
+					           	</td>
+				         	</tr>
+				         	<tr>
+				         		<td>四字姓名</td>
+					           	<td>上海市 浦东新区 郭守敬路433号,上海盛大网络发展有限公司</td>
+					           	<td>201203 </td>
+					           	<td>18602189986</td>
+					           	<td>
+					           		<a href="#" class="link mr10">设为默认地址</a>
+					           		<a href="#" class="link mr10">修改</a>
+					           		<a href="#" class="link">删除</a>
+					           	</td>
+				         	</tr>
+				         	<tr>
+				         		<td>四字姓名</td>
+					           	<td>广东省深圳市南山区学苑大道1001号南山智园B1栋19、20楼,广东盛大网络发展有限公司</td>
+					           	<td>201203 </td>
+					           	<td>18602189986</td>
+					           	<td>
+					           		<a href="#" class="link mr10">设为默认地址</a>
+					           		<a href="#" class="link mr10">修改</a>
+					           		<a href="#" class="link">删除</a>
+					           	</td>
+				         	</tr>
+				         	<tr>
+				         		<td>四字姓名</td>
+					           	<td>上海市 浦东新区 郭守敬路433号,上海盛大网络发展有限公司</td>
+					           	<td>201203 </td>
+					           	<td>18602189986</td>
+					           	<td>
+					           		<a href="#" class="link mr10">设为默认地址</a>
+					           		<a href="#" class="link mr10">修改</a>
+					           		<a href="#" class="link">删除</a>
+					           	</td>
+				         	</tr>
+				         	<tr>
+				         		<td>四字姓名</td>
+					           	<td>广东省深圳市南山区学苑大道1001号南山智园B1栋19、20楼,广东盛大网络发展有限公司</td>
+					           	<td>201203 </td>
+					           	<td>18602189986</td>
+					           	<td>
+					           		<a href="#" class="link mr10">设为默认地址</a>
+					           		<a href="#" class="link mr10">修改</a>
+					           		<a href="#" class="link">删除</a>
+					           	</td>
+				         	</tr>
+				         	<tr>
+				         		<td>四字姓名</td>
+					           	<td>上海市 浦东新区 郭守敬路433号,上海盛大网络发展有限公司</td>
+					           	<td>201203 </td>
+					           	<td>18602189986</td>
+					           	<td>
+					           		<a href="#" class="link mr10">设为默认地址</a>
+					           		<a href="#" class="link mr10">修改</a>
+					           		<a href="#" class="link">删除</a>
+					           	</td>
+				         	</tr>
+				         	<tr>
+				         		<td>四字姓名</td>
+					           	<td>广东省深圳市南山区学苑大道1001号南山智园B1栋19、20楼,广东盛大网络发展有限公司</td>
+					           	<td>201203 </td>
+					           	<td>18602189986</td>
+					           	<td>
+					           		<a href="#" class="link mr10">设为默认地址</a>
+					           		<a href="#" class="link mr10">修改</a>
+					           		<a href="#" class="link">删除</a>
+					           	</td>-->
+				         
+				       	</tbody>
+			       </table>
+			    </div>
+			    <!-- 地址列表 -->
+				
+
+			   
+
+			</div>
+		</div>
+		
+		
+	</div>
+	<!-- 个人中心 over -->
+
+	<footer class="foot mt20 tc">
+		<div th:replace="shop/footer :: page-footer"></div>
+		
+	</footer>
+
+	<script src="js1/jquery-1.11.3.min.js"></script>
+	<script src="js1/bootstrap.min.js"></script>
+	<script src="js1/jquery-latest.min.js"></script>
+	<script src="js1/unslider.min.js"></script>
+	<script src="js1/jquery.event.move.js"></script>
+	<script src="js1/jquery.event.swipe.js"></script>
+	<script src="js1/comm.js"></script>
+</body>
+</html>

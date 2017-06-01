@@ -1,0 +1,232 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>好农易</title>
+<link href="css1/bootstrap.min.css" rel="stylesheet" />
+<link href="css1/style.css" rel="stylesheet" />
+<!--[if lt IE 9]>
+		<script src="js/html5.js"></script>
+		<script src="js/respond.min.js"></script>
+	<![endif]-->
+<script type="text/javascript">
+	function addNum(inputId) {
+		document.getElementById(inputId).value = parseInt(document
+				.getElementById(inputId).value) + 1;
+		var sumCount = document.getElementById("single" + inputId).innerText * document.getElementById(inputId).value;
+		document.getElementById("sum" + inputId).innerText = sumCount.toFixed(2);
+		check();
+	}
+	
+	function subNum(inputId) {
+		if (document.getElementById(inputId).value == "1") {
+			return;
+		}
+		document.getElementById(inputId).value = parseInt(document
+				.getElementById(inputId).value) - 1;
+		var sumCount = document.getElementById("single" + inputId).innerText * document.getElementById(inputId).value;
+		document.getElementById("sum" + inputId).innerText = sumCount.toFixed(2);
+		check();
+	}
+	
+	function count(obj) {
+		var sumCount = document.getElementById("single" + obj.id).innerText * document.getElementById(obj.id).value;
+		document.getElementById("sum" + obj.id).innerText = sumCount.toFixed(2);
+		check();
+	}
+	
+	function checkAll(obj) {
+		var el = document.getElementsByTagName('input');
+		if(obj.checked == true) {
+			var sumXiaoji = 0;
+			var sumCount = 0;
+			var xiaojiLen = document.getElementsByName("xiaoji");
+			for(var xiaoji in xiaojiLen) {
+				if (xiaojiLen[xiaoji].tagName == 'SPAN') {
+					sumXiaoji = sumXiaoji + parseFloat(xiaojiLen[xiaoji].innerText);
+					sumCount = sumCount + 1;
+				}
+			}
+			document.getElementById("sumCount").innerText = sumCount;
+			document.getElementById("sumMoney").innerText = sumXiaoji.toFixed(2);
+			for (var key in el) {
+				if (el[key].type == 'checkbox') {
+					el[key].checked = true;
+				}
+			}
+		} else {
+			document.getElementById("sumCount").innerText = 0;
+			document.getElementById("sumMoney").innerText = 0;
+			for (var key in el) {
+				if (el[key].type == 'checkbox') {
+					el[key].checked = false;
+				}
+			}
+		}
+	}
+
+	function check() {
+		var el = document.getElementsByTagName('input');
+		var xiaojiLen = document.getElementsByName("xiaoji");
+		var xiaojiArray=new Array();
+		var xiaojiInt = 0;
+		var allCheckFlag = true;
+		for (var key in el) {
+			if (el[key].type == 'checkbox') { 
+				if(el[key].id !="checkAllId") {
+					xiaojiArray[xiaojiInt] = el[key].checked;
+					xiaojiInt++;
+					if (el[key].checked == false) {
+						allCheckFlag = false;
+					}
+				}
+			}
+		}
+		document.getElementById("checkAllId").checked = allCheckFlag;
+		var sumXiaoji = 0;
+		var sumCount = 0;
+		for(var xiaoji in xiaojiLen) {
+			if (xiaojiLen[xiaoji].tagName == 'SPAN') {
+				if(xiaojiArray[xiaoji] == true) {
+					sumXiaoji = sumXiaoji + parseFloat(xiaojiLen[xiaoji].innerText);
+					sumCount = sumCount + 1;
+				}
+			}
+		}
+		document.getElementById("sumCount").innerText = sumCount;
+		document.getElementById("sumMoney").innerText = sumXiaoji.toFixed(2);
+	}
+</script>
+</head>
+<body>
+	<div class="top">
+		<div th:replace="shop/topBar :: page-top-bar"></div>
+	</div>
+	<!-- top over -->
+
+	<div class="header">
+		<div th:replace="shop/header :: page-header"></div>
+	</div>
+	<!-- header over -->
+
+	<div class="navBox yh">
+		<div th:replace="shop/menu :: page-menu"></div>
+	</div>
+	<!-- nav over -->
+
+	<div class="container main">
+		<p class="breadNav">
+			<a th:href="@{initIndex}">首页</a><i>&gt;</i>个人中心 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		</p>
+
+		<div class="row">
+			<form action="alipayConfirm" th:object="${cartForm}" method="post">
+				<div class="col-md-2 ceterL">
+					<ul class="centerMenu cf ">
+						<li><a href="order">我的订单</a><i></i></li>
+						<li class="curr"><a href="initCart">我的购物车</a><i></i></li>
+						<li><a href="initReceive">地址管理</a><i></i></li>
+					</ul>
+				</div>
+
+				<div class="col-md-10 ceterR">
+					<ul class="progressBar cf mt15">
+						<li class="curr"><i class="yh">1</i>我的购物车</li>
+						<li><i class="yh">2</i>填写收货地址并支付</li>
+						<li><i class="yh">3</i>下单成功</li>
+					</ul>
+					<h4 class="yh detailsT"><span   class="red" style="font-size:medium" th:text="${message}"></span></h4>
+					<div class="table-responsive mt20">
+						<table class="table  table-order table-cart">
+							<thead>
+								<tr>
+									<th class="wp7_5"><input type="checkbox" id="checkAllId" onclick="checkAll(this);" class="vm" /> 全选</th>
+									<th class="wp40">商品详情</th>
+									<th class="wp15">单价</th>
+									<th class="wp15">数量</th>
+									<th class="wp15">小计</th>
+									<th class="wp7_5">操作</th>
+								</tr>
+							</thead>
+							<tbody th:each="cartsInfo,status:${cartList}">
+								<tr>
+									<td class="chk">									
+									<input type="hidden" th:name="${#strings.concat('listBean[').concat(status.index).concat('].commodityId')}" th:value="${cartsInfo.commodityId}"/>
+									<input type="hidden" th:name="${#strings.concat('listBean[').concat(status.index).concat('].cartId')}" th:value="${cartsInfo.cartId}"/>
+									<input type="checkbox" th:name="${#strings.concat('listBean[').concat(status.index).concat('].checkArray')}" onclick="check();"/></td>
+									<td>
+										<div class="cont cf">
+											<img th:src="@{showImage(pictureId=${cartsInfo.pictureId})}"
+												alt="购物车详细情况" class="pic" />
+											<h4>
+												<span th:text="${cartsInfo.commodityName}"></span>
+											</h4>
+											<p class=" mt10">
+												规格：每<span
+													th:text="${#strings.concat(cartsInfo.unit).concat(cartsInfo.specifications)}"></span>
+											</p>
+											<p>
+												品牌：<span th:text="${cartsInfo.brandName}"></span>
+											</p>
+										</div>
+									</td>
+									<td><p class="price yh">
+											<span th:id="${#strings.concat('single').concat(cartsInfo.commodityId)}" th:text="${cartsInfo.retailPrice}"></span>元
+										</p></td>
+									<td>
+										<div class="chooseAmount">
+											<a href="javascript:void(0);"
+												th:onclick="${#strings.concat('subNum(').concat(cartsInfo.commodityId).concat(')')}"></a>
+											<input readonly="readonly" th:id="${cartsInfo.commodityId}" type="text" class="fl inp-t" th:name="${#strings.concat('listBean[').concat(status.index).concat('].countArray')}" th:value="${cartsInfo.count}" value="1" onblur="count(this);"/>
+											<a href="javascript:void(0);"
+												th:onclick="${#strings.concat('addNum(').concat(cartsInfo.commodityId).concat(')')}"></a>
+										</div>
+									</td>
+									<td><p class="price yh">
+											<span name="xiaoji" th:id="${#strings.concat('sum').concat(cartsInfo.commodityId)}" th:text="${cartsInfo.smallSumPrice}"></span>元
+										</p></td>
+									<td><a class="button"
+										th:href="@{delCart(cartId=${cartsInfo.cartId},count=${cartsInfo.count},commodityId=${cartsInfo.commodityId})}"><span>删除</span></a></td>
+								</tr>
+							</tbody>
+
+						</table>
+					</div>
+				
+
+				<div class="cf goodsSettle noBox">
+					<button class="fl btn btn-success yh" name="delChoosedCart"><span>删除选中的商品</span></button>
+					<p class="fr">					
+						已选择<i id="sumCount" class="yh">0</i>种商品 合计￥<i id="sumMoney" class="yh">0</i>元
+						<button class="btn btn-success yh" name="Go">结 算</button>
+					</p>
+				</div>
+			</div>
+			</form>
+			
+			<!-- 购物车 over -->
+		     </div>
+		</div>
+	
+
+
+
+	<!-- 个人中心 over -->
+
+	<footer class="foot mt20 tc">
+		<div th:replace="shop/footer :: page-footer"></div>
+	</footer>
+	<!--footer over  -->
+
+	<script src="js1/jquery-1.11.3.min.js"></script>
+	<script src="js1/bootstrap.min.js"></script>
+	<script src="js1/jquery-latest.min.js"></script>
+	<script src="js1/unslider.min.js"></script>
+	<script src="js1/jquery.event.move.js"></script>
+	<script src="js1/jquery.event.swipe.js"></script>
+	<script src="js1/comm.js"></script>
+</body>
+</html>

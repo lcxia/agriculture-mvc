@@ -1,0 +1,62 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>好农易商城</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, maximum-scale=1" />
+<link rel="stylesheet" href="mobile/css/style.css" type="text/css"
+	media="all" />
+</head>
+<body>
+	<div class="wrap">
+		<div class="header-bg">
+			<div class="h-bg">
+				<div class="total">
+					<div class="header">
+						<div class="box_header_user_menu">
+							<div th:replace="mobile/userBar:: page-user-bar"></div>
+						</div>
+						<div class="clear"></div>
+					</div>
+					<div class="header-bot">
+						<div th:replace="mobile/logo:: page-logo"></div>
+						<nav class="clearfix"> <a href="#Menu">Menu<img
+							class="menu" src="mobile/images/nav-icon.png" title="Menu" /></a>
+						</nav>
+					</div>
+					<div class="header-bottom">
+						<div class="banner-top">
+							<div id="slideshow">
+								
+							</div>
+							<div class="header-para">
+								<div th:replace="mobile/rightBar :: page-right-bar"></div>
+							</div>
+							<div class="header_bottom_right_images">
+								<div class="about_wrapper">
+									<h1>
+										<span th:text="您已成功支付，请等待商家送货。"></span>
+									</h1>
+								</div>
+								<div class="clear"></div>
+								<a class="button" href="initGoods"><span>回到首页</span></a>
+							</div>
+							<div class="clear"></div>
+							<div class="navgation-links">
+								<a name="Menu"> </a>
+								<div th:replace="mobile/topBar :: page-top-bar"></div>
+							</div>
+							<div class="footer-bottom">
+								<div class="copy">
+									<div th:replace="mobile/copyRight :: page-copy-right"></div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

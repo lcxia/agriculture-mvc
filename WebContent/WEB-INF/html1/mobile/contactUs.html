@@ -1,0 +1,70 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+	<meta charset="UTF-8"/>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1"/>
+	<title>好农易</title>
+	<link href="css1/bootstrap.min.css" rel="stylesheet"/>
+	<link href="css1/style.css" rel="stylesheet"/>
+	<!--[if lt IE 9]>
+		<script src="js/html5.js"></script>
+		<script src="js/respond.min.js"></script>
+	<![endif]-->
+</head>
+<body>
+	<div class="top">
+	<div th:replace="mobile/topBar :: page-top-bar"></div>
+	</div>
+	<!-- top over -->
+
+	<div class="header">
+		<div th:replace="mobile/header :: page-header"></div>
+	</div>
+	<!-- header over -->
+
+	<div class="navBox yh">
+		<div th:replace="mobile/menu :: page-menu"></div>
+	</div>
+	<!-- nav over -->
+
+	<div class="container main">
+		<p class="breadNav"><a th:href="@{initIndex}">首页</a><i>&gt;</i>联系我们</p>
+
+		<div class="row">
+			<div class="col-md-2 ceterL">
+				<ul class="centerMenu cf ">
+					<li><a href="aboutUs.html">关于我们</a><i></i></li>
+					<li class="curr"><a href="contactUs.html">联系我们</a><i></i></li>					
+				</ul>
+			</div>
+			
+			<div class="col-md-10 ceterR">
+			    <div class="fb contact-title yh detailsT">联系我们</div>
+                <div class="contact-cont">
+                  <p class="f12">公司地址：天津市滨海新区**路**号<br/>联系电话：400-123-1236</p>
+                  <p class="f12"><span class="fb f14">市场合作</span><br/>如果您是媒体、渠道，想洽谈资源置换、市场合作，请联系：<br/>邮箱：123456@52hny.cn<br/>如果您想在好农易网投放广告，请联系：<br/>邮箱：778899@52hny.cn</p>
+                  <p class="f12"><span class="fb f14">团购服务</span><br/>如果您是商家，希望在好农易组织团购，请在线提交团购信息。</p>
+                  <p class="f12"><span class="fb f14">用户帮助</span><br/>如果您付款或消费遇到问题请致电客服，客服电话：400-660-5335</p>
+                  <p class="f12"><span class="fb f14">提交漏洞</span><br/>如果您发现了我们的一个安全漏洞，请发送至邮箱778899@52hny.cn</p>
+                </div>
+		  </div>
+		</div>	
+		
+	</div>
+	<!-- 联系我们 over -->
+
+	<footer class="foot mt20 tc">
+  <div th:replace="mobile/footer :: page-footer"></div>
+	</footer>
+	<!--footer over  -->
+
+	<script src="js1/jquery-1.11.3.min.js"></script>
+	<script src="js1/bootstrap.min.js"></script>
+	<script src="js1/jquery-latest.min.js"></script>
+	<script src="js1/unslider.min.js"></script>
+	<script src="js1/jquery.event.move.js"></script>
+	<script src="js1/jquery.event.swipe.js"></script>
+	<script src="js1/comm.js"></script>
+</body>
+</html>

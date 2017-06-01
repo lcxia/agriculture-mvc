@@ -1,0 +1,106 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+	<meta charset="UTF-8"/>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1"/>
+	<title>好农易</title>
+	<link href="css1/bootstrap.min.css" rel="stylesheet"/>
+	<link href="css1/style.css" rel="stylesheet"/>
+	<!--[if lt IE 9]>
+		<script src="js1/html5.js"></script>
+		<script src="js1/respond.min.js"></script>
+	<![endif]-->
+</head>
+<body>
+	<div class="top">
+		<div th:replace="mobile/topBar :: page-top-bar"></div>
+	</div>
+	<!-- top over -->
+	
+	<div class="navBox yh">
+		<div th:replace="mobile/menu :: page-menu"></div>
+	</div>
+	<!-- nav over -->
+	<div class="container main">
+		<div class="row">	
+			<div class="col-md-2 ceterL">
+				<ul class="centerMenu cf ">
+					<li ><i></i></li>
+					<li><i></i></li>
+					<li><i></i></li>
+				</ul>
+			</div>	
+			<div class="col-md-10 ceterR">			 
+				<h3><span class="fb" style="font-size: 20px">订单信息</span></h3>
+					<div>
+						<span class="fb f14"><label>商品信息:</label></span> <span class="f12" th:text="${specialForm.body}"></span>
+					</div>
+					<div>
+						<span class="fb f14"><label>价格:</label></span> <span class="f12" th:text="${specialForm.price}"></span>
+					</div>
+			    <div class="table-responsive mt20">
+					<h1 class="red formInfo" >
+						<span style="font-size: medium">这是一个促销商品的订单，该商品只有一件，且每被转发一次就会降价0.5元，
+							<br>                        随时会被别人拍走，请认真填写以下每项内容以保证商品能够顺利到达您的手中。
+							</br></span>													
+					</h1>
+			    </div>
+			    <form name="specialForm" th:object="${specialForm}" action="specialAlipaySubmit" method="post" class="form-horizontal form-address mt20">
+				<input type="hidden" name="outTradeNo" th:value="${specialForm.outTradeNo}"/>
+				<input type="hidden" name="subject" th:value="${specialForm.subject}"/>
+				<input type="hidden" name="body" th:value="${specialForm.body}"/>
+				<input type="hidden" name="price" th:value="${specialForm.price}"/>
+				<input type="hidden" name="showUrl" th:value="${specialForm.showUrl}"/>
+				<input type="hidden" name="commodityId" th:value="${specialForm.commodityId}"/>
+				<input type="hidden" name="stock" th:value="${specialForm.stock}"/>
+				<table>
+				 	<tr style="border:solid 15px;border-color:white">
+					    <td><span style="font-size: medium">收货人姓名<i class="red">*</i>：</span></td>
+					    <td><input name="receiveName" type="text" class="form-control" th:value="${specialForm.receiveName}"/></td>
+					    <td><i class="red formInfo" ><span style="font-size: medium" th:errors="${specialForm.receiveName}"></span></i></td>
+					</tr>
+				  	<tr style="border:solid 15px;border-color:white">
+					    <td><span style="font-size: medium"> 收货人地址<i class="red">*</i>：</span></td>
+					    <td><input name="receiveAddress" type="text" class="form-control" th:value="${specialForm.receiveAddress}"/></td>
+					    <td><i class="red formInfo"><span style="font-size: medium" th:errors="${specialForm.receiveAddress}"></span></i></td>
+					</tr>
+					<tr style="border:solid 15px;border-color:white">
+					    <td><span style="font-size: medium"> 邮政编码<i class="red">*</i>：</span></td>
+					    <td><input name="receiveZip" type="tel" class="form-control" th:value="${specialForm.receiveZip}"/></td>
+					    <td><i class="red formInfo"><span style="font-size: medium" th:errors="${specialForm.receiveZip}"></span></i></td>
+					</tr>
+					<tr style="border:solid 15px;border-color:white">
+					    <td><span style="font-size: medium">电话号码<i class="red">*</i>：</span></td>
+					    <td><input name="receivePhone" type="tel" class="form-control" th:value="${specialForm.receivePhone}"/></td>
+					    <td><i class="red formInfo"><span style="font-size: medium" th:errors="${specialForm.receivePhone}"></span></i></td>
+					</tr>
+					<tr style="border:solid 15px;border-color:white">
+					    <td><span style="font-size: medium">手机号码<i class="red">*</i>：</span> </td>
+					    <td><input name="receiveMobile" type="tel" class="form-control" th:value="${specialForm.receiveMobile}"/></td>
+					    <td><i class="red formInfo"><span style="font-size: medium" th:errors="${specialForm.receiveMobile}"></span></i></td>
+					</tr>
+				</table>
+				<div th:if="${specialForm.stock}> 0">
+					<button class="btnYellow yh"><span>生成支付宝订单</span></button>
+				</div>
+				
+				</form> 
+			    <!-- 填写收货地址并支付 over -->		    
+			</div>
+		</div>	
+	</div>
+	<footer class="foot mt20 tc">
+		<div th:replace="mobile/footer :: page-footer"></div>		
+	</footer>
+	<!--footer over  -->
+
+	<script src="js1/jquery-1.11.3.min.js"></script>
+	<script src="js1/bootstrap.min.js"></script>
+	<script src="js1/jquery-latest.min.js"></script>
+	<script src="js1/unslider.min.js"></script>
+	<script src="js1/jquery.event.move.js"></script>
+	<script src="js1/jquery.event.swipe.js"></script>
+	<script src="js1/comm.js"></script>
+</body>
+</html>

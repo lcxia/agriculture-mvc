@@ -1,0 +1,61 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta charset="UTF-8"/>
+		<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1"/>
+	<link href="css1/bootstrap.min.css" rel="stylesheet"/>
+	<link href="css1/style.css" rel="stylesheet"/>
+	<!--[if lt IE 9]>
+		<script src="js/html5.js"></script>
+		<script src="js/respond.min.js"></script>
+	<![endif]-->
+</head>
+<body class="regPage">
+	<div class="top">
+	<div th:replace="mobile/topBar :: page-top-bar"></div>
+	</div>
+	<!-- top over -->
+
+	<div class="regHead">
+		<div class="container">
+			<a href="@{/}"><img src="images1/logo.jpg" alt=""/></a>
+			<span class="tit yh">新用户注册</span>
+		</div>		
+	</div>
+	<!-- header over -->
+
+	<div class="container mt20 regBox">
+		
+
+		<div class="row regResult">
+			<div class="col-sm-6 tc">
+				<i class="ico-succ mt30"></i>
+				<h4 class="regTips yh">恭喜您，注册成功！</h4>
+				<p><a class="btn btn-success ml10" href="initIndex">去首页逛逛</a></p>
+			</div>
+			<div class="col-sm-6 r f14">
+				<p>已是好农易会员？<a th:href="@{initGuestLogin}" class="link">去登录</a></p>
+				<img src="images1/qr.jpg" alt=""/>
+				<p class="gray">扫描二维码安装好农易商城安卓客户端</p>
+			</div>
+		</div>
+		<!-- 注册成功 -->
+	</div>
+
+
+	<footer class="foot mt20 tc">
+		<div th:replace="mobile/footer :: page-footer"></div>	
+		
+	</footer>
+	<!--footer over  -->
+
+	<script src="js1/jquery-1.11.3.min.js"></script>
+	<script src="js1/bootstrap.min.js"></script>
+	<script src="js1/jquery-latest.min.js"></script>
+	<script src="js1/unslider.min.js"></script>
+	<script src="js1/jquery.event.move.js"></script>
+	<script src="js1/jquery.event.swipe.js"></script>
+	<script src="js1/comm.js"></script>
+</body>
+</html>

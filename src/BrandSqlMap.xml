@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap
+            PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+            "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<!-- SqlMap定義 -->
+<sqlMap namespace="Brand">
+	<select id="selectBrand"
+		parameterClass="cn.agriculture.web.form.BrandForm"
+		resultClass="cn.agriculture.web.form.BrandForm">
+		SELECT brand_id as brandId,
+			supplier_id as supplierId,
+			brand_name as brandName,
+			note as note,
+			update_time as updateTime,
+			update_user as updateUser
+		FROM brand
+		WHERE 1=1
+		<isNotEmpty property="brandId">
+		AND brand_id = #brandId#
+		</isNotEmpty>
+		<isNotEmpty property="supplierId">
+		AND supplier_id = #supplierId#
+		</isNotEmpty>
+	</select>
+
+	<select id="getSeq" resultClass="java.lang.Integer">
+		SELECT _nextval('brandId')
+	</select>
+
+	<insert id="addBrand" parameterClass="cn.agriculture.web.form.BrandForm">
+		INSERT INTO brand(brand_id, supplier_id, brand_name, note, update_time, update_user)
+		VALUES(#brandId#, #supplierId#, #brandName#, #note#, #updateTime#, #updateUser#)
+	</insert>
+	
+	<update id="editBrand" parameterClass="cn.agriculture.web.form.BrandForm">
+		UPDATE brand SET brand_name = #brandName#,
+			note = #note#,
+			update_time = #updateTime#,
+			update_user = #updateUser#
+		WHERE brand_id = #brandId#
+	</update>
+	
+	<delete id="delBrand" parameterClass="cn.agriculture.web.form.BrandForm">
+		DELETE FROM brand
+		WHERE 1=1 
+		<isNotEmpty property="brandId">
+		AND brand_id = #brandId#
+		</isNotEmpty>
+		<isNotEmpty property="supplierId">
+		AND supplier_id = #supplierId#
+		</isNotEmpty>
+	</delete>
+</sqlMap>

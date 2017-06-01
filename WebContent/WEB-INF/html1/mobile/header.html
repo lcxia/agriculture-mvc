@@ -1,0 +1,42 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta charset="UTF-8"/>
+		<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1"/>
+	<link href="css1/bootstrap.min.css" rel="stylesheet"/>
+	<link href="css1/style.css" rel="stylesheet"/>
+	</head>
+<body>
+		<div class="container cf" th:fragment="page-header">
+			<div class="row">
+				<div class="col-md-4 logo">
+					<a th:href="@{initIndex}">
+						<img src="images1/logo.jpg" alt=""/></a>
+				</div>
+				<div class="col-md-7 col-md-offset-1 cf">
+					<div class="row">
+						<div class="col-sm-8 ">
+							<div class="seachBar mt25 nobox">
+								<i class="ico-s"></i>
+								<form action="selectGoods" th:object="${goodsForm}" method="post">
+								<input type="text" class="inpt" placeholder="请输入关键字" name="commodityName"/>
+								<input type="submit" value="检索" class="btnS"/>
+								</form>
+							</div>
+						</div>
+						<div class="col-sm-4">
+							<p class="cartbar nobox mt25 yh"><a th:href="@{initCart}"><i class="ico"></i>购物车<i class="num"></i></a>
+								<span th:if="${cartList.size() == 0}">
+						为空
+					</span>
+					<span th:if="${cartList.size() != 0}">
+					 有&nbsp;<a href="initCart"><strong> <span th:text="${cartList.size()}">1</span>件商品</strong></a>
+					</span></p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+</body>
+</html>

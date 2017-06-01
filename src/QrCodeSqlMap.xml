@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap
+            PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+            "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<!-- SqlMap定義 -->
+<sqlMap namespace="QrCode">
+	<select id="selectQrCodeList"
+		parameterClass="cn.agriculture.web.form.QrCodeForm"
+		resultClass="cn.agriculture.web.form.QrCodeForm">
+		SELECT distributor_price.distributor_price_id as distributorPriceId,
+			distributor_price.distributor_id as distributorId,
+			commodity.commodity_id as commodityId,
+			commodity.commodity_name as commodityName,
+            distributor_price.retail_price as retailPrice
+		FROM commodity, distributor_price
+		WHERE commodity.commodity_id = distributor_price.commodity_id
+		AND distributor_price.distributor_id = #distributorId#
+	</select>
+	
+</sqlMap>

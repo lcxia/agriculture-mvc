@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap
+            PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+            "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<!-- SqlMap定義 -->
+<sqlMap namespace="Stock">
+	<select id="selectStockList"
+		parameterClass="cn.agriculture.web.form.StockForm"
+		resultClass="cn.agriculture.web.form.StockForm">
+		SELECT stock.stock_id as stockId,
+			commodity.commodity_id as commodityId,
+			commodity.type as type,
+			supplier.supplier_name as supplierName,
+			brand.brand_name as brandName,
+			commodity.commodity_name as commodityName,
+			commodity.specifications as specifications,
+			stock.update_time as updateTime,
+			stock.update_user as updateUser,
+			stock.stock as stock
+		FROM stock, commodity, supplier, brand
+		WHERE stock.commodity_id=commodity.commodity_id
+		AND commodity.supplier_id = supplier.supplier_id
+		AND commodity.brand_id = brand.brand_id
+	</select>
+
+	<select id="selectStock"
+		parameterClass="cn.agriculture.web.form.StockForm"
+		resultClass="cn.agriculture.web.form.StockForm">
+		SELECT stock_id as stockId,
+			commodity_id as commodityId,
+			stock as stock,
+			note as note
+		FROM stock
+		WHERE stock_id = #stockId#
+	</select>
+
+	<select id="selectEditCommodity"
+		parameterClass="cn.agriculture.web.form.StockForm"
+		resultClass="cn.agriculture.web.form.StockForm">
+		select stock_id as stockId,
+				commodity.commodity_id as commodityId,
+		       commodity.commodity_name as commodityName,
+		       stock.stock as stock,
+		       stock.note as note
+		from stock,commodity
+		where stock.commodity_id = commodity.commodity_id
+		and stock.stock_id = #stockId#
+	</select>
+
+	<select id="getSeq" resultClass="java.lang.Integer">
+		SELECT _nextval('stockId')
+	</select>
+
+	<insert id="addStock" parameterClass="cn.agriculture.web.form.StockForm">
+		INSERT INTO stock(stock_id, commodity_id, stock, note, update_time, update_user)
+		VALUES(#stockId#, #commodityId#, #stock#, #note#, #updateTime#, #updateUser#)
+	</insert>
+	
+	<update id="editStock" parameterClass="cn.agriculture.web.form.StockForm">
+		UPDATE stock SET commodity_id = #commodityId#,
+			stock = #stock#,
+			note = #note#,
+			update_time = #updateTime#,
+			update_user = #updateUser#
+		WHERE stock_id = #stockId#
+	</update>
+	
+	<delete id="delStock" parameterClass="cn.agriculture.web.form.StockForm">
+		DELETE FROM stock
+		WHERE stock_id = #stockId#
+	</delete>
+
+	<update id="editStockForSubmitPlaceOrder" parameterClass="cn.agriculture.web.form.StockForm">
+		UPDATE stock SET stock = #stock#,
+			update_time = #updateTime#,
+			update_user = #updateUser#
+		WHERE commodity_id = #commodityId#
+	</update>
+</sqlMap>

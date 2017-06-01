@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap
+            PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+            "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<!-- SqlMap定義 -->
+<sqlMap namespace="MessageReply">
+	<select id="selectMessageReplyList"
+		parameterClass="cn.agriculture.web.form.MessageReplyForm"
+		resultClass="cn.agriculture.web.form.MessageReplyForm">
+		SELECT message_reply_id as messageReplyId,
+			message_id as messageId,
+			context as context,
+			replyer_id as replyerId,
+			update_time as updateTime,
+			update_user as updateUser
+		FROM message_reply
+		WHERE message_id = #messageId#
+		ORDER BY update_time DESC
+	</select>
+	
+	<select id="getSeq" resultClass="java.lang.Integer">
+		SELECT _nextval('messageReplyId')
+	</select>
+	
+	<insert id="addMessageReply" parameterClass="cn.agriculture.web.form.MessageReplyForm">
+		INSERT INTO message_reply(message_reply_id, message_id, context, replyer_id, update_time, update_user)
+		VALUES(#messageReplyId#, #messageId#, #context#, #replyerId#, #updateTime#, #updateUser#)
+	</insert>
+	
+	<delete id="delMessageReply" parameterClass="cn.agriculture.web.form.MessageForm">
+		DELETE FROM message_reply
+		WHERE message_id = #messageId#
+	</delete>
+</sqlMap>

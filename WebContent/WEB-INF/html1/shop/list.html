@@ -1,0 +1,98 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8"/>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1"/>
+	<title>好农易</title>
+	<link href="css1/bootstrap.min.css" rel="stylesheet"/>
+	<link href="css1/style.css" rel="stylesheet"/>
+	<!--[if lt IE 9]>
+		<script src="js/html5.js"></script>
+		<script src="js/respond.min.js"></script>
+	<![endif]-->
+</head>
+<body>
+	<div class="top">
+		<div th:replace="shop/topBar :: page-top-bar"></div>
+	</div>
+	<!-- top over -->
+
+	<div class="header">
+		<div th:replace="shop/header :: page-header"></div>
+	</div>
+	<!-- header over -->
+
+	<div class="navBox yh">
+		<div th:replace="shop/menu :: page-menu"></div>
+	</div>
+	<!-- nav over -->
+
+	<div class="banner">
+	    <ul>
+	        <li><a href="##"><img src="images1/001.jpg" alt=""/></a></li>
+	        <li><a href="##"><img src="images1/002.jpg" alt=""/></a></li>
+	        <li><a href="##"><img src="images1/003.jpg" alt=""/></a></li>
+	        <li><a href="##"><img src="images1/004.jpg" alt=""/></a></li>
+	    </ul>
+	</div>
+	<!-- banner over -->
+
+	<div class="container main">
+		<div class="row">
+			
+			<div class="btn-group btn-group-sm btn-sort col-sm-6" role="group" >
+			<span th:if="${not #strings.isEmpty(goodsForm.commodityTypeId)}">
+			  <a th:href="@{initGoods(commodityTypeId=${goodsForm.commodityTypeId})}" th:class="${orderTypeId}==1?'btn btn-default btn-danger':'btn btn-default'">&nbsp;默&nbsp;认&nbsp;</a>
+			  <a th:href="@{initGoodsByPopularDesc(commodityTypeId=${goodsForm.commodityTypeId})}" th:class="${orderTypeId}==3?'btn btn-default btn-danger':'btn btn-default'" th:if="${orderTypeId}!=2">&nbsp;人&nbsp;气<i></i>&nbsp;</a>
+			  <a th:href="@{initGoodsByPopular(commodityTypeId=${goodsForm.commodityTypeId})}" th:class="${orderTypeId}==2?'btn btn-default btn-danger':'btn btn-default'" th:if="${orderTypeId}==2">&nbsp;人&nbsp;气<i class="up"></i>&nbsp;</a>
+			  <a th:href="@{initGoodsByPriceDesc(commodityTypeId=${goodsForm.commodityTypeId})}" th:class="${orderTypeId}==5?'btn btn-default btn-danger':'btn btn-default'" th:if="${orderTypeId}!=4">&nbsp;价&nbsp;格<i></i>&nbsp;</a>
+			  <a th:href="@{initGoodsByPrice(commodityTypeId=${goodsForm.commodityTypeId})}" th:class="${orderTypeId}==4?'btn btn-default btn-danger':'btn btn-default'" th:if="${orderTypeId}==4">&nbsp;价&nbsp;格<i class="up"></i>&nbsp;</a>
+			  </span>
+			 <span th:if="${#strings.isEmpty(goodsForm.commodityTypeId)}">
+			  <a th:href="@{selectGoods1(commodityName=${goodsForm.commodityName})}" th:class="${orderTypeId}==1?'btn btn-default btn-danger':'btn btn-default'">&nbsp;默&nbsp;认&nbsp;</a>
+			  <a th:href="@{selectGoodsByPopularDesc(commodityName=${goodsForm.commodityName})}" th:class="${orderTypeId}==3?'btn btn-default btn-danger':'btn btn-default'" th:if="${orderTypeId}!=2">&nbsp;人&nbsp;气<i></i>&nbsp;</a>
+			  <a th:href="@{selectGoodsByPopular(commodityName=${goodsForm.commodityName})}" th:class="${orderTypeId}==2?'btn btn-default btn-danger':'btn btn-default'" th:if="${orderTypeId}==2">&nbsp;人&nbsp;气<i class="up"></i>&nbsp;</a>
+			  <a th:href="@{selectGoodsByPriceDesc(commodityName=${goodsForm.commodityName})}" th:class="${orderTypeId}==5?'btn btn-default btn-danger':'btn btn-default'" th:if="${orderTypeId}!=4">&nbsp;价&nbsp;格<i></i>&nbsp;</a>
+			  <a th:href="@{selectGoodsByPrice(commodityName=${goodsForm.commodityName})}" th:class="${orderTypeId}==4?'btn btn-default btn-danger':'btn btn-default'" th:if="${orderTypeId}==4">&nbsp;价&nbsp;格<i class="up"></i>&nbsp;</a>
+			  </span>
+			</div>
+			<div class="col-sm-6 flipBox">
+				<h4 class="h5">共 <span th:text="${list.size()}"> 999 条记录</span> 条记录</h4>
+			</div>
+		</div>
+		<form action="addCart" th:object="${goodsForm}" method="post">
+		<ul class="goodsList cf">
+			<li class="col-md-2 col-sm-4 col-xs-6" th:each="goodsInfo,status:${list}">
+				<div class="cont">
+					<a th:href="@{initGoodsDetail(commodityId=${goodsInfo.commodityId})}"><img th:src="@{showImage(pictureId=${goodsInfo.pictureId})}" alt="" style="height:168px;width:168px;"/></a>
+					<h4 class="h5"><a th:href="@{initGoodsDetail(commodityId=${goodsInfo.commodityId})}"><p th:text="${goodsInfo.commodityName}">品美知糖道阿胶姜汤260g</p></a></h4>
+					<p class="num">库存:<span th:text="${goodsInfo.stock}">15</span>
+					每<span th:text="${#strings.concat(goodsInfo.unit).concat(goodsInfo.specifications)}">袋15kg</span>
+					</p>
+					<p class="cf">
+						<span class="price yh">￥<span th:text="${goodsInfo.retailPrice}">15</span>元</span>
+						<a th:href="@{initGoodsDetail(commodityId=${goodsInfo.commodityId})}" class="btnBuy" title="加入购物车"></a>
+					</p>
+				</div>
+			</li>
+		</ul>
+		</form>
+	</div>
+	<!-- 商品列表 over -->
+
+	<footer class="foot mt20 tc">
+		<div th:replace="shop/footer :: page-footer"></div>
+		
+	</footer>
+	<!--footer over  -->
+
+	<script src="js1/jquery-1.11.3.min.js"></script>
+	<script src="js1/bootstrap.min.js"></script>
+	<script src="js1/jquery-latest.min.js"></script>
+	<script src="js1/unslider.min.js"></script>
+	<script src="js1/jquery.event.move.js"></script>
+	<script src="js1/jquery.event.swipe.js"></script>
+	<script src="js1/comm.js"></script>
+</body>
+</html>

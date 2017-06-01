@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap
+            PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+            "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<!-- SqlMap定義 -->
+<sqlMap namespace="PlaceOrder">
+	<select id="selectPlaceOrderList"
+		parameterClass="cn.agriculture.web.form.PlaceOrderForm"
+		resultClass="cn.agriculture.web.form.PlaceOrderForm">
+		SELECT place_order_id as placeOrderId,
+			storage as storage,
+			transport_mode as transportMode,
+			guest_from as guestFrom,
+			guest_company as guestCompany,
+			province_id as provinceId,
+			city_id as cityId,
+			address as address,
+			contacts as contacts,
+			mobile as mobile,
+			zip as zip,
+			telephone as telephone,
+			order_date as orderDate,
+			note as note,
+			amount as amount,
+			update_time as updateTime,
+			update_user as updateUser,
+			user_id as userId,
+			status as status
+		FROM place_order
+		WHERE user_id = #userId#
+	</select>
+
+	<select id="selectPlaceOrder"
+		parameterClass="cn.agriculture.web.form.PlaceOrderForm"
+		resultClass="cn.agriculture.web.form.PlaceOrderForm">
+		SELECT place_order_id as placeOrderId,
+			storage as storage,
+			transport_mode as transportMode,
+			guest_from as guestFrom,
+			guest_company as guestCompany,
+			province_id as provinceId,
+			city_id as cityId,
+			address as address,
+			contacts as contacts,
+			mobile as mobile,
+			zip as zip,
+			telephone as telephone,
+			order_date as orderDate,
+			note as note,
+			amount as amount,
+			update_time as updateTime,
+			update_user as updateUser,
+			user_id as userId,
+			status as status
+		FROM place_order
+		WHERE place_order_id = #placeOrderId#
+	</select>
+
+	<select id="selectPlaceOrderForDetail"
+		parameterClass="cn.agriculture.web.form.PlaceOrderForm"
+		resultClass="cn.agriculture.web.form.PlaceOrderForm">
+		SELECT place_order.place_order_id as placeOrderId,
+			place_order.storage as storage,
+			express.express_id as expressId,
+			express.express_name as transportMode,
+			place_order.guest_from as guestFrom,
+			place_order.guest_company as guestCompany,
+			province.province_id as provinceId,
+			province.province_name as provinceName,
+			city.city_id as cityId,
+			city.city_name as cityName,
+			place_order.address as address,
+			place_order.contacts as contacts,
+			place_order.mobile as mobile,
+			place_order.zip as zip,
+			place_order.telephone as telephone,
+			place_order.order_date as orderDate,
+			place_order.note as note,
+			place_order.amount as amount,
+			place_order.update_time as updateTime,
+			place_order.update_user as updateUser,
+			place_order.user_id as userId,
+			place_order.status as status
+		FROM place_order, province, city, express
+		WHERE place_order.province_id = province.province_id
+		AND place_order.city_id = city.city_id
+		AND place_order.transport_mode = express.express_id
+		AND place_order_id = #placeOrderId#
+	</select>
+
+	<select id="getSeq" resultClass="java.lang.Integer">
+		SELECT _nextval('placeOrderId')
+	</select>
+
+	<insert id="addPlaceOrder" parameterClass="cn.agriculture.web.form.PlaceOrderForm">
+		INSERT INTO place_order(place_order_id, storage, transport_mode, guest_from, guest_company, province_id, city_id, address, contacts, mobile, zip, telephone, order_date, note, amount, update_time, update_user, user_id, status)
+		VALUES(#placeOrderId#, #storage#, #expressId#, #guestFrom#, #guestCompany#, #provinceId#, #cityId#, #address#, #contacts#, #mobile#, #zip#, #telephone#, #orderDate#, #note#, #amount#, #updateTime#, #updateUser#, #userId#, '未提交')
+	</insert>
+	
+	<select id="selectExpressPrice" parameterClass="cn.agriculture.web.form.PlaceOrderForm" resultClass="cn.agriculture.web.form.ExpressPriceForm">
+		SELECT separate_weight as separateWeight,
+			first_heavy_price as firstHeavyPrice,
+			continued_heavy_price as continuedHeavyPrice
+		FROM express_price
+		WHERE express_id = #expressId#
+		AND province_id = #provinceId#
+	</select>
+	
+	<update id="editPlaceOrder" parameterClass="cn.agriculture.web.form.PlaceOrderForm">
+		UPDATE place_order SET storage = #storage#,
+			transport_mode = #expressId#,
+			guest_from = #guestFrom#,
+			guest_company = #guestCompany#,
+			province_id = #provinceId#,
+			city_id = #cityId#,
+			address = #address#,
+			contacts = #contacts#,
+			mobile = #mobile#,
+			zip = #zip#,
+			telephone = #telephone#,
+			order_date = #orderDate#,
+			note = #note#,
+			amount = #amount#,
+			update_time = #updateTime#,
+			update_user = #updateUser#,
+			status = '未提交'
+		WHERE place_order_id = #placeOrderId#
+	</update>
+	
+	<delete id="delPlaceOrder" parameterClass="cn.agriculture.web.form.PlaceOrderForm">
+		DELETE FROM place_order
+		WHERE place_order_id = #placeOrderId#
+	</delete>
+
+	<update id="submitPlaceOrder" parameterClass="cn.agriculture.web.form.PlaceOrderForm">
+		UPDATE place_order SET status = '已提交'
+		WHERE place_order_id = #placeOrderId#
+	</update>
+
+</sqlMap>

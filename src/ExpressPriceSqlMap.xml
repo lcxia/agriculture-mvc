@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap
+            PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+            "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<!-- SqlMap定義 -->
+<sqlMap namespace="ExpressPrice">
+
+	<select id="selectExpressPriceList"
+		parameterClass="cn.agriculture.web.form.ExpressPriceForm"
+		resultClass="cn.agriculture.web.form.ExpressPriceForm">
+		SELECT express_price.express_price_id as expressPriceId,
+			express_price.express_id as expressId,
+			province.province_name as provinceName,
+			express_price.separate_weight as separateWeight,
+			express_price.first_heavy_price as firstHeavyPrice,
+			express_price.continued_heavy_price as continuedHeavyPrice,
+			express_price.status as status,
+			express_price.note as note,
+			express_price.update_time as updateTime,
+			express_price.update_user as updateUser
+		FROM express_price, province
+		WHERE express_price.province_id = province.province_id 
+		AND express_price.express_id = #expressId#
+	</select>
+	<select id="selectExpressPrice"
+		parameterClass="cn.agriculture.web.form.ExpressPriceForm"
+		resultClass="cn.agriculture.web.form.ExpressPriceForm">
+		SELECT express_price.express_price_id as expressPriceId,
+			express_price.express_id as expressId,
+			province.province_name as provinceName,
+			express_price.province_id as provinceId,
+			express_price.separate_weight as separateWeight,
+			express_price.first_heavy_price as firstHeavyPrice,
+			express_price.continued_heavy_price as continuedHeavyPrice,
+			express_price.status as status,
+			express_price.note as note,
+			express_price.update_time as updateTime,
+			express_price.update_user as updateUser
+		FROM express_price, province
+		WHERE  express_price.province_id = province.province_id
+		AND express_price.express_price_id = #expressPriceId#
+	</select>
+
+	<select id="getSeq" resultClass="java.lang.Integer">
+		SELECT _nextval('expressPriceId')
+	</select>
+
+	<insert id="addExpressPrice" parameterClass="cn.agriculture.web.form.ExpressPriceForm">
+		INSERT INTO express_price(express_price_id, express_id, province_id, separate_weight, first_heavy_price, continued_heavy_price, status, note, update_time, update_user)
+		VALUES(#expressPriceId#, #expressId#, #provinceId#, #separateWeight#, #firstHeavyPrice#, #continuedHeavyPrice#, #status#, #note#, #updateTime#, #updateUser#)
+	</insert>
+	
+	<update id="editExpressPrice" parameterClass="cn.agriculture.web.form.ExpressPriceForm">
+		UPDATE express_price SET express_id = #expressId#,
+			province_id = #provinceId#,
+			separate_weight = #separateWeight#,
+			first_heavy_price = #firstHeavyPrice#,
+			continued_heavy_price = #continuedHeavyPrice#,
+			status = #status#,
+			note = #note#,
+			update_time = #updateTime#,
+			update_user = #updateUser#
+		WHERE express_price_id = #expressPriceId#
+	</update>
+	
+	<delete id="delExpressPrice" parameterClass="cn.agriculture.web.form.ExpressPriceForm">
+		DELETE FROM express_price
+		WHERE 1=1 
+		<isNotEmpty property="expressPriceId">
+		AND express_price_id = #expressPriceId#
+		</isNotEmpty>
+		<isNotEmpty property="expressId">
+		AND express_id = #expressId#
+		</isNotEmpty>
+	</delete>
+</sqlMap>

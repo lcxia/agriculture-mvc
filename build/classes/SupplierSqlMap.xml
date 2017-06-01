@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap
+            PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+            "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<!-- SqlMap定義 -->
+<sqlMap namespace="Supplier">
+	<select id="selectSupplier"
+		parameterClass="cn.agriculture.web.form.SupplierForm"
+		resultClass="cn.agriculture.web.form.SupplierForm">
+		SELECT supplier.supplier_id as supplierId,
+			type as type,
+			level as level,
+			supplier_name as supplierName,
+			province_id as province,
+			city_id as city,
+			address as address,
+			contacts as contacts,
+			fax as fax,
+			telephone as telephone,
+			mobile as mobile,
+			email as email,
+			qq as qq,
+			note as note,
+			update_time as updateTime,
+			update_user as updateUser
+		FROM supplier
+		WHERE 1=1
+		<isNotEmpty property="supplierId">
+		AND supplier_id = #supplierId#
+		</isNotEmpty>
+	</select>
+
+	<select id="getSeq" resultClass="java.lang.Integer">
+		SELECT _nextval('supplierId')
+	</select>
+
+	<insert id="addSupplier" parameterClass="cn.agriculture.web.form.SupplierForm">
+		INSERT INTO supplier(supplier_id, type, level, supplier_name, province_id, city_id, address, contacts, fax, telephone, mobile, email, qq, note, update_time, update_user)
+		VALUES(#supplierId#, #type#, #level#, #supplierName#, #province#, #city#, #address#, #contacts#, #fax#, #telephone#, #mobile#, #email#, #qq#, #note#, #updateTime#, #updateUser#)
+	</insert>
+	
+	<update id="editSupplier" parameterClass="cn.agriculture.web.form.SupplierForm">
+		UPDATE supplier SET supplier.type = #type#,
+			level = #level#,
+			supplier_name = #supplierName#,
+			province_id = #province#,
+			city_id = #city#,
+			address = #address#,
+			contacts = #contacts#,
+			fax = #fax#,
+			telephone = #telephone#,
+			mobile = #mobile#,
+			email = #email#,
+			qq = #qq#,
+			note = #note#,
+			update_time = #updateTime#,
+			update_user = #updateUser#
+		WHERE supplier_id = #supplierId#
+	</update>
+	
+	<delete id="delSupplier" parameterClass="cn.agriculture.web.form.SupplierForm">
+		DELETE FROM supplier
+		WHERE supplier_id = #supplierId#
+	</delete>
+</sqlMap>

@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap
+            PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+            "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<!-- SqlMap定義 -->
+<sqlMap namespace="Receive">
+	<select id="selectReceiveAddresslist"
+		parameterClass="cn.agriculture.web.form.ReceiveForm"
+		resultClass="cn.agriculture.web.form.ReceiveForm">
+		SELECT address_id as addressId,
+			guest_id as guestId,
+			receive_address as addressName,
+			receive_name as receiveName,
+			receive_mobile as mobile,
+			receive_post as post
+		FROM address
+		WHERE guest_id=#guestId#
+	</select>
+	<select id="getAddressId"
+		resultClass="java.lang.Integer">
+	SELECT _nextval('addressId')
+	</select>
+	<insert id="insertReceive"
+		parameterClass="cn.agriculture.web.form.ReceiveForm">
+		INSERT INTO address(address_id,guest_id,receive_address,receive_name,receive_phone,receive_post,receive_mobile)
+		VALUES (#addressId#,#guestId#,#addressName#,#receiveName#,#phone#,#post#,#mobile#)
+	</insert>
+	<update id="updateDefaultaddress"
+		parameterClass="cn.agriculture.web.form.ReceiveForm">
+	UPDATE guest SET address_id=#addressId#
+	WHERE guest_id=#guestId#
+	</update>
+	<select id="selectReceiveAddress"
+		parameterClass="cn.agriculture.web.form.ReceiveForm"
+		resultClass="cn.agriculture.web.form.ReceiveForm">
+		SELECT
+			address_id as addressId,
+			guest_id as guestId,
+			receive_address as addressName,
+			receive_name as receiveName,
+			receive_phone as phone,
+			receive_post as post,
+			receive_mobile as mobile
+		FROM
+			address
+		WHERE
+		   address_id = #addressId#
+	</select>
+
+	<update id="updateAddress"
+		parameterClass="cn.agriculture.web.form.ReceiveForm">
+		UPDATE address
+		SET
+			receive_address=#addressName#,
+			receive_name=#receiveName#,
+			receive_phone=#phone#,
+			receive_post=#post#,
+			receive_mobile=#mobile#
+		WHERE
+		   address_id = #addressId#
+	</update>
+
+	<delete id="deleteAddress"
+		parameterClass="cn.agriculture.web.form.ReceiveForm">
+		DELETE FROM address
+		WHERE
+		   address_id = #addressId#
+	</delete>
+</sqlMap>

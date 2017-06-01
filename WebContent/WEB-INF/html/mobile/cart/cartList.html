@@ -1,0 +1,126 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>好农易商城</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, maximum-scale=1" />
+<link rel="stylesheet" href="mobile/css/style.css" type="text/css"
+	media="all" />
+<div th:if="${#strings.isEmpty(session.UVO.guestName)}">
+	<meta http-equiv="REFRESH" content="0;url=initGuestLogin"/>
+</div>
+</head>
+<body>
+	<div class="wrap">
+		<div class="header-bg">
+			<div class="h-bg">
+				<div class="total">
+					<div class="header">
+						<div class="box_header_user_menu" th:replace="mobile/userBar:: page-user-bar">
+							
+						</div>
+						<div class="clear"></div>
+					</div>
+					<div class="header-bot" th:replace="mobile/logo:: page-logo">
+						
+						<nav class="clearfix"> <a href="#Menu">Menu<img
+							class="menu" src="mobile/images/nav-icon.png" title="Menu" /></a>
+						</nav>
+						
+					</div>
+					<div class="header-bottom">
+						<div class="banner-top">
+							<div id="slideshow">
+								
+							</div>
+							<div class="header-para" th:replace="mobile/rightBar::page-right-bar">
+								
+							</div>
+							<div class="header_bottom_right_images">
+								
+									<div class="about_wrapper">
+										<h1>
+											购物车信息
+										</h1>
+									</div>
+									<form modelAttribute="cartForm" action="alipayConfirm"
+									method="post">
+									<div th:each="cartsInfo,status:${cartList}">
+									
+										<div class="about-top">
+											<div class="grid images_3_of_1">
+												<img alt="购物车详细情况" th:src="@{showImage(pictureId=${cartsInfo.pictureId})}" style="height:185px;width:330px;" />
+											</div>
+											<div class="grid span_2_of_3">
+												<h3><span th:text="${cartsInfo.commodityName}"></span></h3>
+												<p>品牌：<span th:text="${cartsInfo.brandName}"></span></p>
+												<p>经销商：<span th:text="${cartsInfo.supplierName}"></span></p>
+												<p>规格：每<span th:text="${cartsInfo.unit}"></span>
+												<span th:text="${goodsForm.specifications}"></span>
+												</p>
+												<p>零售价：<span th:text="${cartsInfo.retailPrice}"></span>元</p>
+												<p>购买日期：<span th:text="${cartsInfo.updateTime}"></span></p>
+												<p>
+													<span th:text="${cartsInfo.count}"></span>件
+													<a class="button" th:href="@{delCart(cartId=${cartsInfo.cartId},count=${cartsInfo.count},commodityId=${cartsInfo.commodityId})}"><span>删除</span></a>
+												</p>
+											</div>
+											<div class="clear"></div>
+										</div>
+									</div>
+									
+									
+									<div class="clear"></div>
+									<span th:if="${cartList.size()!=0}"><button class="button"><span>结账</span></button></span>
+								</form>
+								<div class="clear"></div>
+								<div class="about_wrapper">
+									<h1>
+										购买历史信息
+									</h1>
+								</div>
+								<div th:each="buyedInfo,status:${list}">
+									<div class="about-top">
+										<div class="grid">
+											<h3>商户订单号:<span th:text="${buyedInfo.outTradeNo}"></span></h3>
+											<p>订单名称：<span th:text="${buyedInfo.subject}"></span></p>
+											<p>付款金额：<span th:text="${buyedInfo.price}"></span></p>
+											<p>订单描述：<span th:text="${buyedInfo.body}"></span></p>
+											<p>收货人姓名：<span th:text="${buyedInfo.receiveName}"></span></p>
+											<p>收货人地址：<span th:text="${buyedInfo.receiveAddress}"></span></p>
+											<p>收货人邮编：<span th:text="${buyedInfo.receiveZip}"></span></p>
+											<p>收货人电话号码：<span th:text="${buyedInfo.receivePhone}"></span></p>
+											<p>收货人手机号码：<span th:text="${buyedInfo.receiveMobile}"></span></p>
+											<p>购买日期：<span th:text="${buyedInfo.updateTime}"></span></p>
+											<p>
+												如果该单已经付过款则重新付款会在支付宝页面提示失败，请不必担心重复付款的问题。
+											 <a class="button" th:href="@{replayAlipay(outTradeNo=${buyedInfo.outTradeNo})}"><span>重新付款</span></a>
+											</p>
+										</div>
+										<div class="clear"></div>
+									</div>
+								</div>
+								<div class="clear"></div>
+						
+							<div class="clear"></div>
+							<div class="navgation-links">
+								<a name="Menu"> </a>
+								<div th:replace="mobile/topBar :: page-top-bar"></div>
+								
+							</div>
+							<div class="footer-bottom">
+								<div class="copy">
+								<div th:replace="mobile/copyRight :: page-copy-right"></div>
+									
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	</div>
+</body>
+</html>

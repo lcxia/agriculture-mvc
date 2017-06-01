@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap
+            PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+            "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<!-- SqlMap定義 -->
+<sqlMap namespace="Express">
+	<select id="selectExpressList"
+		parameterClass="cn.agriculture.web.form.ExpressForm"
+		resultClass="cn.agriculture.web.form.ExpressForm">
+		SELECT express_id as expressId,
+			express_name as expressName,
+			contacts as contacts,
+			mobile as mobile,
+			fax as fax,
+			telephone as telephone,
+			address as address,
+			status as status,
+			note as note,
+			update_time as updateTime,
+			update_user as updateUser
+		FROM express
+	</select>
+
+	<select id="selectExpress"
+		parameterClass="cn.agriculture.web.form.ExpressForm"
+		resultClass="cn.agriculture.web.form.ExpressForm">
+		SELECT express_id as expressId,
+			express_name as expressName,
+			contacts as contacts,
+			mobile as mobile,
+			fax as fax,
+			telephone as telephone,
+			address as address,
+			status as status,
+			note as note,
+			update_time as updateTime,
+			update_user as updateUser
+		FROM express
+		WHERE express_id = #expressId#
+	</select>
+
+	<select id="getSeq" resultClass="java.lang.Integer">
+		SELECT _nextval('expressId')
+	</select>
+
+	<insert id="addExpress" parameterClass="cn.agriculture.web.form.ExpressForm">
+		INSERT INTO express(express_id, express_name, contacts, mobile, fax, telephone, address, status, note, update_time, update_user)
+		VALUES(#expressId#, #expressName#, #contacts#, #mobile#, #fax#, #telephone#, #address#, #status#, #note#, #updateTime#, #updateUser#)
+	</insert>
+	
+	<update id="editExpress" parameterClass="cn.agriculture.web.form.ExpressForm">
+		UPDATE express SET express_name = #expressName#,
+			contacts = #contacts#,
+			mobile = #mobile#,
+			fax = #fax#,
+			telephone = #telephone#,
+			address = #address#,
+			status = #status#,
+			note = #note#,
+			update_time = #updateTime#,
+			update_user = #updateUser#
+		WHERE express_id = #expressId#
+	</update>
+	
+	<delete id="delExpress" parameterClass="cn.agriculture.web.form.ExpressForm">
+		DELETE FROM express
+		WHERE express_id = #expressId#
+	</delete>
+
+</sqlMap>

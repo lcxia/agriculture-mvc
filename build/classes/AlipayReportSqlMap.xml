@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap
+            PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+            "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<!-- SqlMap定義 -->
+<sqlMap namespace="AlipayReport">
+
+	<select id="selectAlipayReportList" resultClass="cn.agriculture.web.form.AlipayReportForm">
+		SELECT out_trade_no as outTradeNo,
+		subject as subject,
+		price as price,
+		body as body,
+		receive_name as receiveName,
+		receive_address as receiveAddress,
+		receive_zip as receiveZip,
+		receive_phone as receivePhone,
+		receive_mobile as receiveMobile,
+		is_paid as isPaid,
+		guest_id as guestId,
+		update_time as updateTime,
+		update_user as updateUser
+		FROM alipay_history
+	</select>
+
+	<delete id="deleteAlipayReport">
+		DELETE FROM alipay_history
+		WHERE out_trade_no = #outTradeNo#
+	</delete>
+</sqlMap>

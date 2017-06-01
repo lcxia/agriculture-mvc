@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap
+            PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+            "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<!-- SqlMap定義 -->
+<sqlMap namespace="Guest">
+	<select id="selectGuest"
+		parameterClass="cn.agriculture.web.form.GuestForm"
+		resultClass="cn.agriculture.web.form.GuestForm">
+		SELECT
+			guest_id as guestId,
+			guest_name as guestName,
+			password as password,
+			gender as gender,
+			email as email,
+			qq as qq,
+			mobile as mobile,
+			update_time as updateTime,
+			update_user as updateUser,
+			phone as phone,
+			zip as zip,
+			address_id as addressId
+		FROM
+			guest
+		WHERE
+			guest_id = #guestId#
+		AND password = #password#
+	</select>
+	
+	<select id="selectAddressId"
+		parameterClass="cn.agriculture.web.form.GuestForm"
+		resultClass="cn.agriculture.web.form.GuestForm">
+		SELECT
+			 address_id as addressId
+		FROM
+	 		guest
+		WHERE
+			guest_id=#guestId#
+	</select>
+
+	<insert id="addGuest" parameterClass="cn.agriculture.web.form.GuestForm">
+		INSERT INTO guest(guest_id, guest_name, password, gender,email, qq, mobile, update_time, update_user, phone, zip) 
+		VALUES(#guestId#, #guestName#, #password#, #gender#,#email#, #qq#, #mobile#, #updateTime#, #updateUser#, #phone#, #zip#)
+	</insert>
+	
+	<update id="editGuest" parameterClass="cn.agriculture.web.form.GuestForm">
+		UPDATE guest SET
+			guest_name=#guestName#,
+			password=#password#,
+			gender=#gender#,
+			email=#email#,
+			qq=#qq#,
+			mobile=#mobile#,
+			update_time=#updateTime#,
+			update_user=#updateUser#,
+			phone = #phone#,
+			zip = #zip#
+		WHERE guest_id=#guestId#
+	</update>
+	
+	<update id="editGuestAddressId" parameterClass="cn.agriculture.web.form.GuestForm">
+		UPDATE guest SET
+			address_id=#addressId#
+		WHERE guest_id=#guestId#
+	</update>
+</sqlMap>

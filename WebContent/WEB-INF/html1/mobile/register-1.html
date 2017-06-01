@@ -1,0 +1,114 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+	<meta charset="UTF-8"/>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1"/>
+	<title>好农易</title>
+	<link href="css1/bootstrap.min.css" rel="stylesheet"/>
+	<link href="css1/style.css" rel="stylesheet"/>
+	<!--[if lt IE 9]>
+		<script src="js1/html5.js"></script>
+		<script src="js1/respond.min.js"></script>
+	<![endif]-->
+</head>
+<body class="regPage">
+	<div class="top">
+		<div th:replace="mobile/topBar :: page-top-bar"></div>
+	</div>
+	<!-- top over -->
+
+	<div class="regHead">
+		<div class="container">
+			<a th:href="@{/}"><img src="images1/logo.jpg" alt=""/></a>
+			<span class="tit yh">新用户注册</span>
+		</div>
+		<div class="container">
+			<span th:text="${message}"></span>
+		</div>		
+	</div>
+	<!-- header over -->
+
+	<div class="container mt20 regBox">
+		<form action="addGuest" th:object="${guestForm}" method="post" class="form-horizontal">
+		  	<div class="form-group">
+			    <span><label class="col-sm-4 control-label">用户ID:<span style="display:inline;color:red;">*</span></label></span> 
+			    <div class="col-sm-8">
+			    	<span><input name="guestId" type="text" th:value="${guestForm.guestId}" class="form-control"/></span><i class="red" style="font-size:medium" th:errors="${guestForm.guestId}"></i><span  class="red" style="font-size:medium"  th:text="${message}"></span>
+			    </div>
+		  	</div>
+		  	<div class="form-group">
+			   <span><label class="col-sm-4 control-label">密码:<span style="display:inline;color:red;">*</span></label></span>
+			    <div class="col-sm-8">
+			      	<span><input name="password" type="password" class="form-control"/></span><i class="red" style="font-size:medium" th:errors="${guestForm.password}"></i>
+			    </div>
+		  	</div>
+		  	<div class="form-group">
+			      <span><label class="col-sm-4 control-label">重复密码：</label></span>
+			    <div class="col-sm-8">
+			      	<span><input name="passwordConfirm" type="password" class="form-control"/></span><i class="red" style="font-size:medium" th:text="${message1}"></i>
+			    </div>
+		  	</div>
+		  	  	 	<div class="form-group">
+			   <span><label class="col-sm-4 control-label">姓名<span style="display:inline;color:red;">*</span></label></span>
+			    <div class="col-sm-8">
+			      	<span><input name="guestName" type="text" th:value="${guestForm.guestName}" class="form-control"/></span><i class="red" style="font-size:medium" th:errors="${guestForm.guestName}"></i>
+			    </div>
+		  	</div>
+		  	  	<div class="form-group">
+			   <span><label class="col-sm-4 control-label">性别</label></span>
+			    <div class="col-sm-8">
+			    <select class="form-control" name="gender" >
+			    <option  value="男">男</option>
+			    <option  value="女">女</option>
+			    </select>
+			    </div>
+		  	</div>
+		  		<div class="form-group">
+			   <span><label class="col-sm-4 control-label">移动电话号码<span style="display:inline;color:red;">*</span></label></span>
+			    <div class="col-sm-8">
+			      	<span><input name="mobile" type="text" th:value="${guestForm.mobile}" class="form-control"/></span><i class="red" style="font-size:medium" th:errors="${guestForm.mobile}"></i>
+			    </div>
+		  	</div>
+		  	<div class="form-group">
+			   <span><label class="col-sm-4 control-label">Email</label></span>
+			    <div class="col-sm-8">
+			      	<span><input name="email" type="text" th:value="${guestForm.email}" class="form-control"/></span><i class="red" style="font-size:medium" th:errors="${guestForm.email}"></i>
+			    </div>
+		  	</div>
+		  	<div class="form-group">
+			   <span><label class="col-sm-4 control-label">QQ</label></span>
+			    <div class="col-sm-8">
+			      	<span><input name="qq" type="text" th:value="${guestForm.qq}" class="form-control"/></span><i class="red" style="font-size:medium" th:errors="${guestForm.qq}"></i>
+			    </div>
+		  	</div>
+		  	<div class="form-group">
+			   <span><label class="col-sm-4 control-label">座机号码</label></span>
+			    <div class="col-sm-8">
+			      	<span><input name="phone" type="text" th:value="${guestForm.phone}" class="form-control"/></span><i class="red" style="font-size:medium" th:errors="${guestForm.phone}"></i>
+			    </div>
+		  	</div>
+		  <div class="form-group">
+					    <div class="col-sm-offset-2 col-sm-10">
+					     <button type="submit" class="btnYellow yh">提交</button>
+					    </div>
+				  	</div>
+		</form>
+		<!-- 注册 -->
+	</div>
+
+
+	<footer class="foot mt20 tc">
+	<div th:replace="mobile/footer :: page-footer"></div>
+	</footer>
+	<!--footer over  -->
+
+	<script src="js1/jquery-1.11.3.min.js"></script>
+	<script src="js1/bootstrap.min.js"></script>
+	<script src="js1/jquery-latest.min.js"></script>
+	<script src="js1/unslider.min.js"></script>
+	<script src="js1/jquery.event.move.js"></script>
+	<script src="js1/jquery.event.swipe.js"></script>
+	<script src="js1/comm.js"></script>
+</body>
+</html>

@@ -1,0 +1,31 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" lang="en">
+	<head>
+		<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1"/>
+	<link href="css1/bootstrap.min.css" rel="stylesheet"/>
+	<link href="css1/style.css" rel="stylesheet"/>
+	</head>
+<body>
+		<div class="container" th:fragment="page-menu">
+			<div class="navbar navbar-inverse " rple="navigation">
+			  <div class="navbar-header">
+			    <button class="navbar-toggle" type="button" data-toggle="collapse" data-target=".navbar-responsive-collapse">
+			      <span class="sr-only">Toggle Navigation</span>
+			      <span class="icon-bar"></span>
+			      <span class="icon-bar"></span>
+			      <span class="icon-bar"></span>
+			    </button>
+			    <a href="##" class="navbar-brand">好农易商城</a>
+			  </div>
+			  <div class="collapse navbar-collapse navbar-responsive-collapse cf ">
+			    <ul class="nav navbar-nav">
+			          <li th:class="${#strings.isEmpty(goodsForm.commodityTypeId)?'active':''}"><a th:href="@{initIndex}"><i class="ico-nav ico-nav-1"></i>首页</a></li>
+			         <li th:each="goodsInfo,status:${commodityType}" th:class="${goodsForm.commodityTypeId}==${goodsInfo.commodityTypeId}?'active':''">
+			<a th:href="@{initGoods(commodityTypeId=${goodsInfo.commodityTypeId})}"><span th:class="${goodsInfo.ph}"></span><span th:text="${goodsInfo.commodityTypeName}"></span></a></li>
+			    </ul> 
+			  </div>
+			</div>
+		</div>
+</body>
+</html>

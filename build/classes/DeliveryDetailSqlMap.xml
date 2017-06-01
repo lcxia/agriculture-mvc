@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap
+            PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+            "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<!-- SqlMap定義 -->
+<sqlMap namespace="DeliveryDetail">
+	<select id="selectDeliveryDetailList"
+		parameterClass="cn.agriculture.web.form.DeliveryDetailForm"
+		resultClass="cn.agriculture.web.form.DeliveryDetailForm">
+		SELECT place_order_detail.place_order_detail_id as placeOrderDetailId,
+			place_order_detail.place_order_id as placeOrderId,
+			place_order_detail.commodity_id as commodityId,
+			commodity.brand_id as brandId,
+			brand.brand_name as brandName,
+			commodity.commodity_name as commodityName,
+			commodity.weight as weight,
+			commodity.specifications as specifications,
+			commodity.unit as unit,
+			commodity.benchmark_price as benchmarkPrice,
+			commodity.guide_price as guidePrice,
+			commodity.retail_price as retailPrice,
+			place_order_detail.note as note,
+			stock.stock as stock,
+			place_order_detail.purchase_count as purchaseCount,
+			place_order_detail.update_time as updateTime,
+			place_order_detail.update_user as updateUser,
+			distributor.price_increment as priceIncrement
+		FROM place_order_detail, commodity, brand, stock, place_order, distributor
+		WHERE place_order_detail.commodity_id = commodity.commodity_id
+		AND commodity.brand_id = brand.brand_id
+		AND commodity.commodity_id = stock.commodity_id
+		AND place_order_detail.place_order_id = place_order.place_order_id
+		AND place_order.user_id = distributor.distributor_id
+		AND place_order_detail.place_order_id = #placeOrderId#
+	</select>
+
+</sqlMap>

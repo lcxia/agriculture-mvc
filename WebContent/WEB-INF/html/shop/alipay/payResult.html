@@ -1,0 +1,69 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>好农易商城</title>
+<link href="shop/css/style.css" rel="stylesheet" type="text/css"
+	media="all" />
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<script src="shop/js/jquery.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+	$("#close").click(function(){
+		window.open('','_self','');
+		window.close();
+	});
+});
+</script>
+<link rel="shortcut icon" href="shop/images/pic28.jpg"/>
+<link rel="Bookmark" href="shop/images/pic28.jpg"/>
+</head>
+<body>
+<div class="header-bg">
+		<div class="wrap">
+			<div class="h-bg">
+				<div class="total">
+					<div class="header">
+						<div class="box_header_user_menu">
+							<ul class="user_menu">
+									<div th:replace="shop/userBar :: page-user-bar"></div>
+							</ul>
+						</div>
+						<div class="clear"></div>
+						<div class="header-bot">
+							<div th:replace="shop/logo :: page-logo"></div>
+						</div>
+					</div>
+					<div class="menu">
+						<div th:replace="shop/topBar :: page-top-bar"></div>
+					</div>
+					<div class="banner-top">
+						<div class="header-bottom">
+							<div class="header_bottom_right_images">
+									<div class="about_wrapper">
+										<h1>
+											<span th:text="您已成功支付，请等待商家送货。"></span>
+										</h1>
+									</div>
+									<div class="clear"></div>
+									<input type="button" id="close" class="button" th:value="关闭" />
+							</div>
+							<div class="header-para">
+								<div th:replace="shop/rightBar :: page-right-bar"></div>
+							</div>
+							<div class="clear"></div>
+							<div class="footer-bottom">
+								<div class="copy">
+									<div th:replace="shop/copyRight :: page-copy-right"></div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

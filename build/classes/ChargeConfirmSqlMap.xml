@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap
+            PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+            "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<!-- SqlMap定義 -->
+<sqlMap namespace="ChargeConfirm">
+	<select id="selectChargeConfirmList"
+		parameterClass="cn.agriculture.web.form.ChargeConfirmForm"
+		resultClass="cn.agriculture.web.form.ChargeConfirmForm">
+		SELECT charge_id as chargeId,
+			amount as amount,
+			distributor_id as distributorId,
+			charge_date as chargeDate,
+			update_time as updateTime,
+			update_user as updateUser,
+			status as status
+		FROM charge
+	</select>
+
+	<select id="selectChargeConfirm"
+		parameterClass="cn.agriculture.web.form.ChargeConfirmForm"
+		resultClass="cn.agriculture.web.form.ChargeConfirmForm">
+		SELECT charge_id as chargeId,
+			amount as amount,
+			distributor_id as distributorId,
+			charge_date as chargeDate,
+			update_time as updateTime,
+			update_user as updateUser,
+			status as status
+		FROM charge
+		WHERE charge_id = #chargeId#
+	</select>
+	
+	<select id="selectDistributor"
+		parameterClass="cn.agriculture.web.form.ChargeConfirmForm"
+		resultClass="cn.agriculture.web.form.DistributorForm">
+		SELECT distributor_id as distributorId,
+			amount as amount
+		FROM distributor
+		WHERE distributor_id = #distributorId#
+	</select>
+	
+		<update id="editDistributor"
+		parameterClass="cn.agriculture.web.form.DistributorForm">
+		UPDATE distributor SET amount = #amount#
+		WHERE distributor_id = #distributorId#
+	</update>
+	
+	<update id="editChargeConfirm" parameterClass="cn.agriculture.web.form.ChargeConfirmForm">
+		UPDATE charge SET status = #status#,
+			update_time = #updateTime#,
+			update_user = #updateUser#
+		WHERE charge_id = #chargeId#
+	</update>
+	
+</sqlMap>

@@ -1,0 +1,99 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>好农易商城</title>
+<link href="shop/css/style.css" rel="stylesheet" type="text/css" media="all" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<!--slider-->
+<script src="shop/js/jquery.min.js"></script>
+<script src="shop/js/script.js" type="text/javascript"></script>
+<script src="shop/js/superfish.js"></script>
+<link rel="shortcut icon" href="shop/images/pic28.jpg" />
+<link rel="Bookmark" href="shop/images/pic28.jpg" />
+</head>
+<body>
+	<div class="header-bg">
+		<div class="wrap">
+			<div class="h-bg">                                       
+				<div class="total">
+					<div class="header">
+						<div class="box_header_user_menu">
+							<div th:replace="shop/userBar :: page-user-bar"></div>
+						</div>
+						<div class="clear"></div>
+						<div class="header-bot">
+							<div th:replace="shop/logo :: page-logo"></div>
+							<div class="clear"></div>
+						</div>
+					</div>
+					<div class="menu">
+						<div th:replace="shop/topBar :: page-top-bar"></div>
+					</div>
+					<div class="banner-top">
+						<div class="header-bottom">
+							<div class="header_bottom_right_images">
+								<div id="slideshow">
+									<ul class="slides">
+										<li><a href="#"><canvas></canvas>
+												<img src="shop/images/banner4.jpg" /></a></li>
+										<li><a href="#"><canvas></canvas>
+												<img src="shop/images/banner2.jpg" /></a></li>
+										<li><a href="#"><canvas></canvas>
+												<img src="shop/images/banner3.jpg" /></a></li>
+										<li><a href="#"><canvas></canvas>
+												<img src="shop/images/banner1.jpg" /></a></li>
+									</ul>
+									<span class="arrow previous"></span> <span class="arrow next"></span>
+								</div>
+								<div class="content-wrapper">
+									<div class="content-top">
+										<div class="box_wrapper">
+											<h1>商品信息</h1>
+										</div>
+										<div class="text">
+											<div class="grid_1_of_3 grid_1_of_3first images_1_of_3" th:class="${status.count%3==1}?'grid_1_of_3 grid_1_of_3first images_1_of_3':'grid_1_of_3 images_1_of_3'" th:each="goodsInfo,status:${list}">
+												<div class="grid_1">
+										  <a th:href="@{initGoodsDetail(commodityId=${goodsInfo.commodityId},commodityTypeId=${goodsInfo.commodityTypeId})}"><img alt="商品详细情况" th:src="@{showImage(pictureId=${goodsInfo.pictureId})}" style="height:185px;width:330px;" /></a>
+													<div class="grid_desc">
+														<p class="title" th:text="${goodsInfo.commodityName}">大米</p>
+														<p class="title1">库存:<span th:text="${goodsInfo.stock}">15</span></p>
+														<div class="price" style="height: 35px;">
+															<span class="reducedfrom">￥<span th:text="${goodsInfo.retailPrice}">15</span>元</span>
+															<span class="reducedfrom">每<span th:text="${#strings.concat(goodsInfo.unit).concat(goodsInfo.specifications)}">袋15kg</span></span>
+														</div>
+														<div class="cart-button">
+															<div class="cart">
+																<a th:href="@{initGoodsDetail(commodityId=${goodsInfo.commodityId})}"><img src="shop/images/cart.png" alt="商品详细情况" /></a>
+															</div>
+															<div class="clear"></div>
+														</div>
+													</div>
+												</div>
+												<div class="clear"></div>
+											</div>
+											<div class="clear"></div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="header-para">
+								<div th:replace="shop/rightBar :: page-right-bar"></div>
+							</div>
+							<div class="clear"></div>
+							<div class="footer-bottom">
+								<div class="copy">
+									<div th:replace="shop/copyRight :: page-copy-right"></div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
+
+
+

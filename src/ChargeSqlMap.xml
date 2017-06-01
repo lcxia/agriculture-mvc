@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap
+            PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+            "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<!-- SqlMap定義 -->
+<sqlMap namespace="Charge">
+	<select id="selectChargeList"
+		parameterClass="cn.agriculture.web.form.ChargeForm"
+		resultClass="cn.agriculture.web.form.ChargeForm">
+		SELECT charge_id as chargeId,
+			amount as amount,
+			distributor_id as distributorId,
+			charge_date as chargeDate,
+			update_time as updateTime,
+			update_user as updateUser,
+			status as status
+		FROM charge
+		WHERE distributor_id = #distributorId#
+	</select>
+
+	<select id="selectCharge"
+		parameterClass="cn.agriculture.web.form.ChargeForm"
+		resultClass="cn.agriculture.web.form.ChargeForm">
+		SELECT charge_id as chargeId,
+			amount as amount,
+			distributor_id as distributorId,
+			charge_date as chargeDate,
+			update_time as updateTime,
+			update_user as updateUser,
+			status as status
+		FROM charge
+		WHERE charge_id = #chargeId#
+	</select>
+
+	<select id="getSeq" resultClass="java.lang.Integer">
+		SELECT _nextval('chargeId')
+	</select>
+
+	<insert id="addCharge" parameterClass="cn.agriculture.web.form.ChargeForm">
+		INSERT INTO charge(charge_id, amount, distributor_id, charge_date, update_time, update_user, status)
+		VALUES(#chargeId#, #amount#, #distributorId#, #chargeDate#, #updateTime#, #updateUser#, #status#)
+	</insert>
+	
+	<update id="editCharge" parameterClass="cn.agriculture.web.form.ChargeForm">
+		UPDATE charge SET status = #status#,
+			update_time = #updateTime#,
+			update_user = #updateUser#
+		WHERE charge_id = #chargeId#
+	</update>
+	
+</sqlMap>

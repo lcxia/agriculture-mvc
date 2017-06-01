@@ -1,0 +1,120 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" lang="en">
+	<head>
+		<meta charset="UTF-8"/>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1"/>
+	<title>好农易</title>
+	<link href="css1/bootstrap.min.css" rel="stylesheet"/>
+	<link href="css1/style.css" rel="stylesheet"/>
+	<!--[if lt IE 9]>
+		<script src="js/html5.js"></script>
+		<script src="js/respond.min.js"></script>
+	<![endif]-->
+</head>
+<body>
+	<div class="top">
+		<div th:replace="mobile/topBar :: page-top-bar"></div>
+	</div>
+	<!-- top over -->
+
+	<div class="header">
+	<div th:replace="mobile/header :: page-header"></div>
+	</div>
+	<!-- header over -->
+
+	<div class="navBox yh">
+		<div th:replace="mobile/menu :: page-menu"></div>
+	</div>
+	<!-- nav over -->
+
+	<div class="container main">
+		<p class="breadNav"><a href="@{initIndex}">首页</a><i>&gt;</i>个人中心</p>
+
+		<div class="row">	
+			<div class="col-md-2 ceterL">
+				<ul class="centerMenu cf ">
+					<li ><i></i></li>
+					<li><i></i></li>
+					<li><i></i></li>
+				</ul>
+			</div>	
+			<div class="col-md-10 ceterR">
+				<ul class="progressBar cf mt15">
+					<li class="curr"><i class="yh">1</i>我的购物车</li>
+					<li class="curr"><i class="yh">2</i>填写收货地址并支付</li>
+					<li><i class="yh">3</i>下单成功</li>
+				</ul>			 
+				<h3><span class="fb" style="font-size: 20px">订单信息</span></h3>
+					<div>
+						<span class="fb f14"><label>商品信息:</label></span> <span class="f12" th:text="${alipayForm.body}"></span>
+					</div>
+					<div>
+						<span class="fb f14"><label>价格:</label></span> <span class="f12" th:text="${alipayForm.price}"></span>
+					</div>
+			    <div class="table-responsive mt20">
+					<h1 class="red formInfo" >
+						<span style="font-size: medium">您现在是匿名购买该商品，请认真填写以下每项内容以保证商品能够顺利到达您的手中。 </span>													
+					</h1>
+			    </div>
+			    <form name="alipayForm"  action="guestAlipaySubmit" th:object="${alipayForm}" method="post" class="form-horizontal form-address mt20">
+			    <input name="outTradeNo" type="hidden"  th:value="${alipayForm.outTradeNo}" />
+				<input name="subject" type="hidden"  th:value="${alipayForm.subject}" />
+				<input name="body" type="hidden" th:value="${alipayForm.body}" />
+				<input name="price" type="hidden"  th:value="${alipayForm.price}" />
+				<input name="showUrl" type="hidden"  th:value="${alipayForm.showUrl}" />
+				<input name="commodityId" type="hidden" th:value="${alipayForm.commodityId}" />
+				<input name="guestId" type="hidden"  th:value="${alipayForm.guestId}" />
+				<input name="count"  type="hidden" th:value="${alipayForm.count}" />
+				 <table>
+				 	<tr style="border:solid 15px;border-color:white">
+					    <td><i class="red">*</i> <span style="font-size: medium">收货人姓名：</span></td>
+					    <td><input name="receiveName" type="text" class="form-control" th:value="${alipayForm.receiveName}"/></td>
+					    <td><i class="red formInfo" ><span style="font-size: medium" th:errors="${alipayForm.receiveName}"></span></i></td>
+					</tr>
+				  	<tr style="border:solid 15px;border-color:white">
+					    <td><i class="red">*</i><span style="font-size: medium"> 所在地区：</span></td>
+					    <td><input name="receiveAddress" type="text" class="form-control" th:value="${alipayForm.receiveAddress}"/></td>
+					    <td><i class="red formInfo"><span style="font-size: medium" th:errors="${alipayForm.receiveAddress}"></span></i></td>
+					</tr>
+					<tr style="border:solid 15px;border-color:white">
+					    <td><i class="red">*</i><span style="font-size: medium"> 邮政编码：</span></td>
+					    <td><input name="receiveZip" type="tel" class="form-control" th:value="${alipayForm.receiveZip}"/></td>
+					    <td><i class="red formInfo"><span style="font-size: medium" th:errors="${alipayForm.receiveZip}"></span></i></td>
+					</tr>
+					<tr style="border:solid 15px;border-color:white">
+					    <td><span style="font-size: medium">&nbsp;电话号码：</span></td>
+					    <td><input name="receivePhone" type="tel" class="form-control" th:value="${alipayForm.receivePhone}"/></td>
+					    <td><i class="red formInfo"><span style="font-size: medium" th:errors="${alipayForm.receivePhone}"></span></i></td>
+					</tr>
+					<tr style="border:solid 15px;border-color:white">
+					    <td><i class="red">*</i> <span style="font-size: medium">手机号码：</span></td>
+					    <td><input name="receiveMobile" type="tel" class="form-control" th:value="${alipayForm.receiveMobile}"/></td>
+					    <td><i class="red formInfo"><span style="font-size: medium" th:errors="${alipayForm.receiveMobile}"></span></i></td>
+					</tr>
+					</table>				
+				<p class="tr mt20"><button class="btnBlue yh">去支付</button></p>
+				 </form> 
+			    <!-- 填写收货地址并支付 over -->
+			    
+			</div>
+		</div>
+		
+		
+	</div>
+	<!-- 个人中心 over -->
+
+	<footer class="foot mt20 tc">
+		<div th:replace="mobile/footer :: page-footer"></div>	
+	</footer>
+	<!--footer over  -->
+
+	<script src="js1/jquery-1.11.3.min.js"></script>
+	<script src="js1/bootstrap.min.js"></script>
+	<script src="js1/jquery-latest.min.js"></script>
+	<script src="js1/unslider.min.js"></script>
+	<script src="js1/jquery.event.move.js"></script>
+	<script src="js1/jquery.event.swipe.js"></script>
+	<script src="js1/comm.js"></script>
+</body>
+</html>

@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap
+            PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+            "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<!-- SqlMap定義 -->
+<sqlMap namespace="Commodity">
+	<select id="selectCommodityList"
+		parameterClass="cn.agriculture.web.form.CommodityForm"
+		resultClass="cn.agriculture.web.form.CommodityForm">
+		SELECT commodity.commodity_id as commodityId,
+			commodity.type as commodityTypeId,
+			commodity_type.commodity_type_id as commodityTypeId,
+			commodity_type.commodity_type_name as commodityTypeName,
+			supplier.supplier_name as supplierName,
+			brand.brand_name as brandName,
+			commodity.commodity_name as commodityName,
+			commodity.weight as weight,
+			commodity.is_gift as isGift,
+			commodity.specifications as specifications,
+			commodity.unit as unit,
+			commodity.benchmark_price as benchmarkPrice,
+			commodity.guide_price as guidePrice,
+			commodity.retail_price as retailPrice,
+			commodity.competition_level as competitionLevel,
+			commodity.note as note,
+			commodity.update_time as updateTime,
+			commodity.update_user as updateUser,
+			commodity.picture_id as pictureId,
+			commodity.picture_id as pictureId1,
+			commodity.picture_id as pictureId2,
+			commodity.picture_id as pictureId3,
+			commodity.picture_id as pictureId4,
+			commodity.picture_id as pictureId5,
+			commodity.picture_id as pictureId6
+		FROM commodity, supplier, brand,commodity_type
+		WHERE commodity.supplier_id = supplier.supplier_id
+		AND commodity.brand_id = brand.brand_id
+		and commodity_type.commodity_type_id = commodity.type
+	</select>
+
+	<select id="selectCommodity"
+		parameterClass="cn.agriculture.web.form.CommodityForm"
+		resultClass="cn.agriculture.web.form.CommodityForm">
+		SELECT commodity_id as commodityId,
+			type as commodityTypeId,
+			supplier_id as supplierId,
+			brand_id as brandId,
+			commodity_name as commodityName,
+			weight as weight,
+			is_gift as isGift,
+			specifications as specifications,
+			unit as unit,
+			benchmark_price as benchmarkPrice,
+			guide_price as guidePrice,
+			retail_price as retailPrice,
+			competition_level as competitionLevel,
+			note as note,
+			update_time as updateTime,
+			update_user as updateUser,
+			picture_id as pictureId,
+			picture1_id as pictureId1,
+			picture2_id as pictureId2,
+			picture3_id as pictureId3,
+			picture4_id as pictureId4,
+			picture5_id as pictureId5,
+			picture6_id as pictureId6
+		FROM commodity
+		WHERE commodity_id = #commodityId#
+	</select>
+
+	<select id="getSeq" resultClass="java.lang.Integer">
+		SELECT _nextval('commodityId')
+	</select>
+	<select id="getSeq1" resultClass="java.lang.Integer">
+		SELECT _nextval('pictureId')
+	</select>
+
+	<insert id="addCommodity" parameterClass="cn.agriculture.web.form.CommodityForm">
+		INSERT INTO commodity(commodity_id, type, supplier_id, brand_id, commodity_name, weight, is_gift, specifications, unit, benchmark_price, guide_price, retail_price, competition_level, note, update_time, update_user, picture_id,picture1_id, picture2_id, picture3_id, picture4_id, picture5_id, picture6_id)
+		VALUES(#commodityId#, #commodityTypeId#, #supplierId#, #brandId#, #commodityName#, #weight#, #isGift#, #specifications#, #unit#, #benchmarkPrice#, #guidePrice#, #retailPrice#, #competitionLevel#, #note#, #updateTime#, #updateUser#, #pictureId#,#pictureId1#, #pictureId2#, #pictureId3#, #pictureId4#, #pictureId5#, #pictureId6#)
+	</insert>
+	
+	<update id="editCommodity" parameterClass="cn.agriculture.web.form.CommodityForm">
+		UPDATE commodity SET type = #commodityTypeId#,
+			supplier_id = #supplierId#,
+			brand_id = #brandId#,
+			commodity_name = #commodityName#,
+			weight = #weight#,
+			is_gift = #isGift#,
+			specifications = #specifications#,
+			unit = #unit#,
+			benchmark_price = #benchmarkPrice#,
+			guide_price = #guidePrice#,
+			retail_price = #retailPrice#,
+			competition_level = #competitionLevel#,
+			note = #note#,
+			update_time = #updateTime#,
+			update_user = #updateUser#,
+			picture_id = #pictureId#,
+			picture1_id = #pictureId1#,
+			picture2_id = #pictureId2#,
+			picture3_id = #pictureId3#,
+			picture4_id = #pictureId4#,
+			picture5_id = #pictureId5#,
+			picture6_id = #pictureId6#
+		WHERE commodity_id = #commodityId#
+	</update>
+	
+	<delete id="delCommodity" parameterClass="cn.agriculture.web.form.CommodityForm">
+		DELETE FROM commodity
+		WHERE commodity_id = #commodityId#
+	</delete>
+	
+	<insert id="addPicture" parameterClass="cn.agriculture.web.form.CommodityForm">
+		INSERT INTO picture(picture_id, picture)
+		VALUES(#pictureId#, #picture#)
+	</insert>
+	<insert id="addPicture1" parameterClass="cn.agriculture.web.form.CommodityForm">
+		INSERT INTO picture(picture_id, picture)
+		VALUES(#pictureId1#, #picture1#)
+	</insert>
+	<insert id="addPicture2" parameterClass="cn.agriculture.web.form.CommodityForm">
+		INSERT INTO picture(picture_id, picture)
+		VALUES(#pictureId2#, #picture2#)
+	</insert>
+	<insert id="addPicture3" parameterClass="cn.agriculture.web.form.CommodityForm">
+		INSERT INTO picture(picture_id, picture)
+		VALUES(#pictureId3#, #picture3#)
+	</insert>
+	<insert id="addPicture4" parameterClass="cn.agriculture.web.form.CommodityForm">
+		INSERT INTO picture(picture_id, picture)
+		VALUES(#pictureId4#, #picture4#)
+	</insert>
+	<insert id="addPicture5" parameterClass="cn.agriculture.web.form.CommodityForm">
+		INSERT INTO picture(picture_id, picture)
+		VALUES(#pictureId5#, #picture5#)
+	</insert>
+	<insert id="addPicture6" parameterClass="cn.agriculture.web.form.CommodityForm">
+		INSERT INTO picture(picture_id, picture)
+		VALUES(#pictureId6#, #picture6#)
+	</insert>
+	
+	<update id="editPicture" parameterClass="cn.agriculture.web.form.CommodityForm">
+		UPDATE picture SET picture=#picture#
+		WHERE picture_id=#pictureId#
+	</update>
+	<update id="editPicture1" parameterClass="cn.agriculture.web.form.CommodityForm">
+		UPDATE picture SET picture=#picture1#
+		WHERE picture_id=#pictureId1#
+	</update>
+	<update id="editPicture2" parameterClass="cn.agriculture.web.form.CommodityForm">
+		UPDATE picture SET picture=#picture2#
+		WHERE picture_id=#pictureId2#
+	</update>
+	<update id="editPicture3" parameterClass="cn.agriculture.web.form.CommodityForm">
+		UPDATE picture SET picture=#picture3#
+		WHERE picture_id=#pictureId3#
+	</update>
+	<update id="editPicture4" parameterClass="cn.agriculture.web.form.CommodityForm">
+		UPDATE picture SET picture=#picture4#
+		WHERE picture_id=#pictureId4#
+	</update>
+	<update id="editPicture5" parameterClass="cn.agriculture.web.form.CommodityForm">
+		UPDATE picture SET picture=#picture5#
+		WHERE picture_id=#pictureId5#
+	</update>
+	<update id="editPicture6" parameterClass="cn.agriculture.web.form.CommodityForm">
+		UPDATE picture SET picture=#picture6#
+		WHERE picture_id=#pictureId6#
+	</update>
+	
+	<delete id="delPicture" parameterClass="cn.agriculture.web.form.CommodityForm">
+		DELETE FROM picture
+		WHERE picture_id = #pictureId#
+	</delete>
+	<delete id="delPicture1" parameterClass="cn.agriculture.web.form.CommodityForm">
+		DELETE FROM picture
+		WHERE picture_id = #pictureId1#
+	</delete>
+	<delete id="delPicture2" parameterClass="cn.agriculture.web.form.CommodityForm">
+		DELETE FROM picture
+		WHERE picture_id = #pictureId2#
+	</delete>
+	<delete id="delPicture3" parameterClass="cn.agriculture.web.form.CommodityForm">
+		DELETE FROM picture
+		WHERE picture_id = #pictureId3#
+	</delete>
+	<delete id="delPicture4" parameterClass="cn.agriculture.web.form.CommodityForm">
+		DELETE FROM picture
+		WHERE picture_id = #pictureId4#
+	</delete>
+	<delete id="delPicture5" parameterClass="cn.agriculture.web.form.CommodityForm">
+		DELETE FROM picture
+		WHERE picture_id = #pictureId5#
+	</delete>
+	<delete id="delPicture6" parameterClass="cn.agriculture.web.form.CommodityForm">
+		DELETE FROM picture
+		WHERE picture_id = #pictureId6#
+	</delete>
+	
+	<delete id="delStock" parameterClass="cn.agriculture.web.form.CommodityForm">
+		DELETE FROM stock
+		WHERE commodity_id = #commodityId#
+	</delete>
+	
+	<select id="selectPicture" parameterClass="cn.agriculture.web.form.CommodityForm" resultClass="cn.agriculture.web.form.CommodityForm">
+		SELECT picture as picture,
+			picture_id as pictureId
+		FROM picture WHERE picture_id = #pictureId#
+	</select>
+	<select id="selectPictureId" parameterClass="cn.agriculture.web.form.CommodityForm" resultClass="cn.agriculture.web.form.CommodityForm">
+		SELECT 	commodity_id as  commodityId,picture_id as pictureId,picture1_id as pictureId1,picture2_id as pictureId2,picture3_id as pictureId3,picture4_id as pictureId4,picture5_id as pictureId5,picture6_id as pictureId6
+		FROM commodity WHERE commodity_id = #commodityId#
+	</select>
+</sqlMap>

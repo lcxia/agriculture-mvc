@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap
+            PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+            "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<!-- SqlMap定義 -->
+<sqlMap namespace="DistributorPrice">
+	<select id="selectDistributorPriceList"
+		parameterClass="cn.agriculture.web.form.DistributorPriceForm"
+		resultClass="cn.agriculture.web.form.DistributorPriceForm">
+		SELECT commodity.type as type,
+			supplier.supplier_name as supplierName,
+			brand.brand_name as brandName,
+			commodity.specifications as specifications,
+			commodity.commodity_id as commodityId,
+			commodity.commodity_name as commodityName,
+			commodity.guide_price as guidePrice,
+			commodity.benchmark_price as benchmarkPrice,
+            IFNULL(distributor_price.retail_price,commodity.retail_price) as retailPrice,
+			commodity.is_gift as isGift,
+            distributor_price.distributor_price_id as distributorPriceId
+		FROM commodity LEFT JOIN (SELECT commodity_id, retail_price, distributor_price_id FROM distributor_price WHERE distributor_price.distributor_id = #distributorId#) distributor_price ON commodity.commodity_id = distributor_price.commodity_id, supplier, brand
+		WHERE commodity.supplier_id = supplier.supplier_id
+		AND commodity.brand_id = brand.brand_id
+	</select>
+	
+	<select id="selectDistributorPrice"
+		parameterClass="cn.agriculture.web.form.DistributorPriceForm"
+		resultClass="cn.agriculture.web.form.DistributorPriceForm">
+		SELECT commodity.type as type,
+			supplier.supplier_name as supplierName,
+			brand.brand_name as brandName,
+			commodity.specifications as specifications,
+			commodity.commodity_id as commodityId,
+			commodity.commodity_name as commodityName,
+			commodity.guide_price as guidePrice,
+			commodity.benchmark_price as benchmarkPrice,
+            IFNULL(distributor_price.retail_price,commodity.retail_price) as retailPrice,
+			commodity.is_gift as isGift,
+            distributor_price.distributor_price_id as distributorPriceId
+		FROM commodity LEFT JOIN (SELECT commodity_id, retail_price, distributor_price_id FROM distributor_price WHERE distributor_price.distributor_id = #distributorId#) distributor_price ON commodity.commodity_id = distributor_price.commodity_id, supplier, brand
+		WHERE commodity.supplier_id = supplier.supplier_id
+		AND commodity.brand_id = brand.brand_id
+		AND commodity.commodity_id = #commodityId#
+		
+	</select>
+	
+	<select id="getSeq" resultClass="java.lang.Integer">
+		SELECT _nextval('distributorPriceId')
+	</select>
+	
+	<insert id="addDistributorPrice" parameterClass="cn.agriculture.web.form.DistributorPriceForm">
+		INSERT INTO distributor_price(distributor_price_id, distributor_id, commodity_id, retail_price, update_time, update_user)
+		VALUES(#distributorPriceId#, #distributorId#, #commodityId#, #retailPrice#, #updateTime#, #updateUser#)
+	</insert>
+	
+	<update id="editDistributorPrice" parameterClass="cn.agriculture.web.form.DistributorPriceForm">
+		UPDATE distributor_price SET distributor_id = #distributorId#, 
+			commodity_id = #commodityId#, 
+			retail_price = #retailPrice#, 
+			update_time = #updateTime#, 
+			update_user = #updateUser#
+		WHERE distributor_price_id = #distributorPriceId#
+	</update>
+</sqlMap>

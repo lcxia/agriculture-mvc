@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap
+            PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+            "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<!-- SqlMap定義 -->
+<sqlMap namespace="Alipay">
+	<select id="selectDistributorPrice"
+		parameterClass="cn.agriculture.web.form.AlipayForm"
+		resultClass="cn.agriculture.web.form.DistributorPriceForm">
+		SELECT commodity.type as type,
+			supplier.supplier_name as supplierName,
+			brand.brand_name as brandName,
+			commodity.specifications as specifications,
+			commodity.commodity_id as commodityId,
+			commodity.commodity_name as commodityName,
+			commodity.guide_price as guidePrice,
+			commodity.benchmark_price as benchmarkPrice,
+            distributor_price.retail_price as retailPrice,
+			commodity.is_gift as isGift,
+            distributor_price.distributor_price_id as distributorPriceId,
+            distributor_price.distributor_id as distributorId,
+            distributor.distributor_name as distributorName
+		FROM commodity, distributor, distributor_price, supplier, brand
+		WHERE commodity.supplier_id = supplier.supplier_id
+		AND commodity.brand_id = brand.brand_id
+		AND commodity.commodity_id = distributor_price.commodity_id
+        AND distributor_price.distributor_id = distributor.distributor_id
+		AND distributor_price.distributor_price_id = #distributorPriceId#
+	</select>
+
+	<select id="selectStock"
+		parameterClass="cn.agriculture.web.form.AlipayForm"
+		resultClass="java.lang.Integer">
+		SELECT stock as stock
+		FROM stock
+		WHERE commodity_id = #commodityId#
+	</select>
+
+	<update id="editStock" parameterClass="cn.agriculture.web.form.AlipayForm">
+		UPDATE stock SET stock = (stock - #count#)
+		WHERE commodity_id = #commodityId#
+	</update>
+
+	<update id="editPayment" parameterClass="cn.agriculture.web.form.ReturnForm">
+		UPDATE alipay_history SET is_paid = 'true'
+		WHERE out_trade_no = #out_trade_no#
+	</update>
+</sqlMap>

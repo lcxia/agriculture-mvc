@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap
+            PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+            "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<!-- SqlMap定義 -->
+<sqlMap namespace="ExpressList">
+	<select id="selectExpressListList"
+		parameterClass="cn.agriculture.web.form.ExpressListForm"
+		resultClass="cn.agriculture.web.form.ExpressListForm">
+		SELECT express_list.express_list_id as expressListId,
+			express.express_name as expressName,
+			express_list.is_used as isUsed,
+			express_list.order_id as orderId,
+			express_list.used_date as usedDate,
+			express_list.note as note,
+			express_list.storage as storage,
+			express_list.update_time as updateTime,
+			express_list.update_user as updateUser
+		FROM express_list, express
+		WHERE express_list.express_id = express.express_id
+	</select>
+
+	<select id="selectExpressList"
+		parameterClass="cn.agriculture.web.form.ExpressListForm"
+		resultClass="cn.agriculture.web.form.ExpressListForm">
+		SELECT express_list_id as expressListId,
+			express_id as expressId,
+			is_used as isUsed,
+			order_id as orderId,
+			used_date as usedDate,
+			note as note,
+			storage as storage,
+			update_time as updateTime,
+			update_user as updateUser
+		FROM express_list
+		WHERE express_list_id = #expressListId#
+	</select>
+
+	<insert id="addExpressList" parameterClass="cn.agriculture.web.form.ExpressListForm">
+		INSERT INTO express_list(express_list_id, express_id, is_used, order_id, used_date, note, storage, update_time, update_user)
+		VALUES(#expressListId#, #expressId#, #isUsed#, #orderId#, #usedDate#, #note#, #storage#, #updateTime#, #updateUser#)
+	</insert>
+	
+	<update id="editExpressList" parameterClass="cn.agriculture.web.form.ExpressListForm">
+		UPDATE express_list SET express_list_id = #expressListId#,
+			express_id = #expressId#,
+			is_used = #isUsed#,
+			order_id = #orderId#,
+			used_date = #usedDate#,
+			note = #note#,
+			storage = #storage#,
+			update_time = #updateTime#,
+			update_user = #updateUser#
+		WHERE express_list_id = #expressListId#
+	</update>
+	
+	<delete id="delExpressList" parameterClass="cn.agriculture.web.form.ExpressListForm">
+		DELETE FROM express_list
+		WHERE express_list_id = #expressListId#
+	</delete>
+
+</sqlMap>

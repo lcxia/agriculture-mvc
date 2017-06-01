@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap
+            PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+            "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<!-- SqlMap定義 -->
+<sqlMap namespace="Distributor">
+	<select id="selectDistributorList"
+		parameterClass="cn.agriculture.web.form.DistributorForm"
+		resultClass="cn.agriculture.web.form.DistributorForm">
+		SELECT distributor_id as distributorId,
+			distributor_name as distributorName,
+			type as type,
+			level as level,
+			print_name as printName,
+			province_id as provinceId,
+			city_id as cityId,
+			address as address,
+			contacts as contacts,
+			fax as fax,
+			telephone as telephone,
+			mobile as mobile,
+			email as email,
+			wechat as wechat,
+			qq as qq,
+			alipay as alipay,
+			note as note,
+			update_time as updateTime,
+			update_user as updateUser,
+			price_increment as priceIncrement,
+			amount as amount
+		FROM distributor
+	</select>
+
+	<select id="selectDistributor"
+		parameterClass="cn.agriculture.web.form.DistributorForm"
+		resultClass="cn.agriculture.web.form.DistributorForm">
+		SELECT distributor_id as distributorId,
+			distributor_name as distributorName,
+			type as type,
+			level as level,
+			print_name as printName,
+			province_id as provinceId,
+			city_id as cityId,
+			address as address,
+			contacts as contacts,
+			fax as fax,
+			telephone as telephone,
+			mobile as mobile,
+			email as email,
+			wechat as wechat,
+			qq as qq,
+			alipay as alipay,
+			note as note,
+			update_time as updateTime,
+			update_user as updateUser,
+			price_increment as priceIncrement,
+			amount as amount
+		FROM distributor
+		WHERE distributor_id = #distributorId#
+	</select>
+	
+	<select id="selectDistributorForPrice"
+		parameterClass="cn.agriculture.web.form.DistributorForm"
+		resultClass="cn.agriculture.web.form.DistributorForm">
+		SELECT distributor.distributor_id as distributorId,
+			distributor.distributor_name as distributorName,
+			distributor.type as type,
+			distributor.level as level,
+			distributor.print_name as printName,
+			province.province_name as provinceName,
+			city.city_name as cityName,
+			distributor.address as address,
+			distributor.contacts as contacts,
+			distributor.fax as fax,
+			distributor.telephone as telephone,
+			distributor.mobile as mobile,
+			distributor.email as email,
+			distributor.wechat as wechat,
+			distributor.qq as qq,
+			distributor.alipay as alipay,
+			distributor.note as note,
+			distributor.update_time as updateTime,
+			distributor.update_user as updateUser,
+			distributor.price_increment as priceIncrement,
+			amount as amount
+		FROM distributor, province, city
+		WHERE distributor.province_id = province.province_id
+		AND distributor.city_id = city.city_id
+		AND distributor_id = #distributorId#
+	</select>
+	
+	<select id="selectDistributorForLogin"
+		parameterClass="cn.agriculture.web.form.DistributorForm"
+		resultClass="cn.agriculture.web.form.DistributorForm">
+		SELECT distributor_id as distributorId,
+			password as password,
+			distributor_name as distributorName,
+			type as type,
+			level as level,
+			print_name as printName,
+			province_id as provinceId,
+			city_id as cityId,
+			address as address,
+			contacts as contacts,
+			fax as fax,
+			telephone as telephone,
+			mobile as mobile,
+			email as email,
+			wechat as wechat,
+			qq as qq,
+			alipay as alipay,
+			note as note,
+			update_time as updateTime,
+			update_user as updateUser,
+			price_increment as priceIncrement,
+			amount as amount
+		FROM distributor
+		WHERE distributor_id = #distributorId#
+		AND password = #password#
+	</select>
+
+	<insert id="addDistributor" parameterClass="cn.agriculture.web.form.DistributorForm">
+		INSERT INTO distributor(distributor_id, password, distributor_name, type, level, print_name, province_id, city_id, address, contacts, fax, telephone, mobile, email, wechat, qq, alipay, note, update_time, update_user, price_increment, amount)
+		VALUES(#distributorId#, #password#, #distributorName#, #type#, #level#, #printName#, #provinceId#, #cityId#, #address#, #contacts#, #fax#, #telephone#, #mobile#, #email#, #wechat#, #qq#, #alipay#, #note#, #updateTime#, #updateUser#, #priceIncrement#, '0')
+	</insert>
+	
+	<update id="editDistributor" parameterClass="cn.agriculture.web.form.DistributorForm">
+		UPDATE distributor SET password = #password#,
+			distributor_name = #distributorName#,
+			type = #type#,
+			level = #level#,
+			print_name = #printName#,
+			province_id = #provinceId#,
+			city_id = #cityId#,
+			address = #address#,
+			contacts = #contacts#,
+			fax = #fax#,
+			telephone = #telephone#,
+			mobile = #mobile#,
+			email = #email#,
+			wechat = #wechat#,
+			qq = #qq#,
+			alipay = #alipay#,
+			note = #note#,
+			update_time = #updateTime#,
+			update_user = #updateUser#,
+			price_increment = #priceIncrement#
+		WHERE distributor_id = #distributorId#
+	</update>
+	
+	<delete id="delDistributor" parameterClass="cn.agriculture.web.form.DistributorForm">
+		DELETE FROM distributor
+		WHERE distributor_id = #distributorId#
+	</delete>
+	
+	<update id="editDistributorPassword" parameterClass="cn.agriculture.web.form.DistributorForm">
+		UPDATE distributor SET password = #password#
+		WHERE distributor_id = #distributorId#
+	</update>
+	
+	<update id="editDistributorAmount" parameterClass="cn.agriculture.web.form.DistributorForm">
+		UPDATE distributor SET amount = #amount#
+		WHERE distributor_id = #distributorId#
+	</update>
+</sqlMap>

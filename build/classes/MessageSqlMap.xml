@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap
+            PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+            "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<!-- SqlMap定義 -->
+<sqlMap namespace="Message">
+	<select id="selectMessageList"
+		parameterClass="cn.agriculture.web.form.MessageForm"
+		resultClass="cn.agriculture.web.form.MessageForm">
+		SELECT message_id as messageId,
+			distributor_id as distributorId,
+			title as title,
+			context as context,
+			update_time as updateTime,
+			update_user as updateUser
+		FROM message
+		WHERE 1=1
+		<isNotNull property="distributorId">
+			AND distributor_id = #distributorId#
+		</isNotNull>
+		ORDER BY update_time DESC
+	</select>
+	
+	<select id="selectMessage"
+		parameterClass="cn.agriculture.web.form.MessageForm"
+		resultClass="cn.agriculture.web.form.MessageForm">
+		SELECT message_id as messageId,
+			distributor_id as distributorId,
+			title as title,
+			context as context,
+			update_time as updateTime,
+			update_user as updateUser
+		FROM message
+		WHERE message_id = #messageId#
+	</select>
+	
+	<select id="getSeq" resultClass="java.lang.Integer">
+		SELECT _nextval('messageId')
+	</select>
+	
+	<insert id="addMessage" parameterClass="cn.agriculture.web.form.MessageForm">
+		INSERT INTO message(message_id, distributor_id, title, context, update_time, update_user)
+		VALUES(#messageId#, #distributorId#, #title#, #context#, #updateTime#, #updateUser#)
+	</insert>
+	
+	<delete id="delMessage" parameterClass="cn.agriculture.web.form.MessageForm">
+		DELETE FROM message
+		WHERE message_id = #messageId#
+	</delete>
+</sqlMap>

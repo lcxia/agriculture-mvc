@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap
+            PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+            "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<!-- SqlMap定義 -->
+<sqlMap namespace="Common">
+	<select id="selectProvince"
+		resultClass="cn.agriculture.web.form.Item">
+		SELECT province_name as label,
+				province_id as value
+		FROM province
+	</select>
+	
+	<select id="selectProvinceLabel" parameterClass="java.lang.String"
+		resultClass="java.lang.String">
+		SELECT province_name as label
+		FROM province
+		WHERE province_id = #value#
+	</select>
+	
+	<select id="selectCity" parameterClass="java.lang.String"
+		resultClass="cn.agriculture.web.form.Item">
+		SELECT city_name as label,
+				city_id as value
+		FROM city
+		WHERE province_id = #provinceId#
+	</select>
+	
+		<select id="selectCityLabel" parameterClass="java.lang.String"
+		resultClass="java.lang.String">
+		SELECT city_name as label
+		FROM city
+		WHERE city_id = #value#
+	</select>
+	
+	<select id="selectCommodityType"
+		resultClass="cn.agriculture.web.form.Item">
+		SELECT commodity_type_name as label,
+				commodity_type_id as value
+		FROM commodity_type
+	</select>
+	
+	<select id="selectSupplier"
+		resultClass="cn.agriculture.web.form.Item">
+		SELECT supplier_name as label,
+				supplier_id as value
+		FROM supplier
+	</select>
+	
+	<select id="selectSupplierLabel" parameterClass="java.lang.String"
+		resultClass="java.lang.String">
+		SELECT supplier_name as label
+		FROM supplier
+		WHERE supplier_id = #value#
+	</select>
+	
+	<select id="selectBrand" parameterClass="java.lang.String"
+		resultClass="cn.agriculture.web.form.Item">
+		SELECT brand_name as label,
+				brand_id as value
+		FROM brand
+		WHERE supplier_id = #supplierId#
+	</select>
+	
+	<select id="selectBrandLabel" parameterClass="java.lang.String"
+		resultClass="java.lang.String">
+		SELECT brand_name as label
+		FROM brand
+		WHERE brand_id = #value#
+	</select>
+	
+	<select id="selectCommodity" parameterClass="java.lang.String"
+		resultClass="cn.agriculture.web.form.Item">
+		SELECT commodity_name as label,
+				commodity_id as value
+		FROM commodity
+		<isNotNull property="value">
+		WHERE brand_id = #value#
+		</isNotNull>
+	</select>	
+	
+	<select id="selectSurCommodity" parameterClass="java.lang.String"
+		resultClass="cn.agriculture.web.form.Item">
+		SELECT commodity_name as label,
+				commodity_id as value
+		FROM commodity
+		WHERE not exists(
+		SELECT stock.commodity_id
+		FROM stock
+		WHERE stock.commodity_id = commodity.commodity_id)
+	</select>
+	
+	<select id="selectCommodityLabel" parameterClass="java.lang.String"
+		resultClass="java.lang.String">
+		SELECT commodity_name as label
+		FROM commodity
+		WHERE commodity_id = #value#
+	</select>
+	
+	<select id="selectExpress"
+		resultClass="cn.agriculture.web.form.Item">
+		SELECT express_name as label,
+				express_id as value
+		FROM express
+		WHERE status = '启用'
+	</select>
+	
+	<select id="selectExpressPriceProvince" parameterClass="java.lang.String"
+		resultClass="cn.agriculture.web.form.Item">
+		SELECT province_name as label,
+				province_id as value
+		FROM province   
+		WHERE not exists(
+		SELECT express_price.province_id
+		FROM express_price,express
+		WHERE express_price.province_id=province.province_id
+        AND express.express_id=express_price.express_id
+        AND express.express_id=#value#)
+	</select>
+	
+	<select id="selectDistributor"
+		resultClass="cn.agriculture.web.form.Item">
+		SELECT distributor_name as label,
+				distributor_id as value
+		FROM distributor
+	</select>
+</sqlMap>

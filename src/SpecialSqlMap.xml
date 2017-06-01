@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap
+            PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+            "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<!-- SqlMap定義 -->
+<sqlMap namespace="Special">
+
+	<select id="selectSpecial" resultClass="cn.agriculture.web.form.SpecialForm">
+		SELECT special_ip as specialIp,
+		update_time as updateTime
+		FROM special_ip
+	</select>
+	
+	<delete id="deleteSpecial">
+		DELETE FROM special_ip
+	</delete>
+	
+	<select id="selectRemoteIp" parameterClass="java.lang.String" resultClass="java.lang.Integer">
+		SELECT count(special_ip) as count
+		FROM special_ip
+		WHERE special_ip = #value#
+	</select>
+	
+	<insert id="addRemoteIp" parameterClass="java.lang.String">
+		INSERT INTO special_ip(special_ip, update_time) 
+		VALUES(#value#, NOW())
+	</insert>
+
+	<update id="cutPrice" parameterClass="cn.agriculture.web.form.SpecialForm">
+		UPDATE commodity SET retail_price = retail_price - 0.5
+		WHERE competition_level = '高' 
+		AND commodity_id = #commodityId#
+	</update>
+
+	<select id="selectSpecialPrice"
+		parameterClass="cn.agriculture.web.form.SpecialForm"
+		resultClass="cn.agriculture.web.form.SpecialForm">
+		SELECT commodity.commodity_id as commodityId,
+			commodity.commodity_name as commodityName,
+            commodity.retail_price as retailPrice,
+            stock.stock as stock
+		FROM commodity, stock
+		WHERE stock.commodity_id = commodity.commodity_id
+		AND commodity.commodity_id = #commodityId#
+	</select>
+
+	<select id="selectStock"
+		parameterClass="cn.agriculture.web.form.SpecialForm"
+		resultClass="java.lang.Integer">
+		SELECT stock as stock
+		FROM stock
+		WHERE commodity_id = #commodityId#
+	</select>
+
+	<update id="editStock" parameterClass="cn.agriculture.web.form.SpecialForm">
+		UPDATE stock SET stock = (stock - 1)
+		WHERE commodity_id = #commodityId#
+	</update>
+
+	<insert id="addAlipayHistory" parameterClass="cn.agriculture.web.form.SpecialForm">
+		INSERT INTO alipay_history(out_trade_no, subject, price, body, show_url, receive_name, receive_address, receive_zip, receive_phone, receive_mobile, guest_id, update_time, update_user, is_rebate)
+		VALUES(#outTradeNo#, #subject#, #price#, #body#, #showUrl#, #receiveName#, #receiveAddress#, #receiveZip#, #receivePhone#, #receiveMobile#, #updateUser#, #updateTime#, #updateUser#, '未返点')
+	</insert>
+
+</sqlMap>

@@ -1,0 +1,85 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>好农易商城</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, maximum-scale=1" />
+<link rel="stylesheet" href="mobile/css/style.css" type="text/css"
+	media="all" />
+</head>
+<body>
+	<div class="wrap">
+		<div class="header-bg">
+			<div class="h-bg">
+				<div class="total">
+					<div class="header">
+						<div class="box_header_user_menu">
+						<div th:replace="mobile/userBar::page-user-bar"></div>
+						</div>
+						<div class="clear"></div>
+					</div>
+					<div class="header-bot">
+					<div th:replace="mobile/logo::page-logo"></div>
+						<nav class="clearfix"> <a href="#Menu">Menu<img
+							class="menu" src="mobile/images/nav-icon.png" title="Menu" /></a>
+						</nav>
+					</div>
+					<div class="header-bottom">
+						<div class="banner-top">
+							<div id="slideshow">
+								
+							</div>
+							<div class="header-para">
+							   <div th:replace="mobile/rightBar::page-right-bar"></div>
+							</div>
+							<div class="header_bottom_right_images">
+								<div class="content-wrapper">
+									<div class="content-top">
+										<div class="box_wrapper">
+											<h1>商品信息</h1>
+										</div>
+										<div class="text">
+										<div class="grid_1_of_3 grid_1_of_3first images_1_of_3" th:class="${status.count%3==1}?'grid_1_of_3 grid_1_of_3first images_1_of_3':'grid_1_of_3 images_1_of_3'" th:each="goodsInfo,status:${list}">
+												<div class="grid_1">
+										  <a th:href="@{initGoodsDetail(commodityId=${goodsInfo.commodityId})}"><img alt="商品详细情况" th:src="@{showImage(pictureId=${goodsInfo.pictureId})}" style="height:185px;width:330px;" /></a>
+													<div class="grid_desc">
+														<p class="title" th:text="${goodsInfo.commodityName}">大米</p>
+														<p class="title1">库存:<span th:text="${goodsInfo.stock}">15</span></p>
+														<div class="price" style="height: 35px;">
+															<span class="reducedfrom">￥<span th:text="${goodsInfo.retailPrice}">15</span>元</span>
+															<span class="reducedfrom">每<span th:text="${#strings.concat(goodsInfo.unit).concat(goodsInfo.specifications)}">袋15kg</span></span>
+														</div>
+														<div class="cart-button">
+															<div class="cart">
+																<a th:href="@{initGoodsDetail(commodityId=${goodsInfo.commodityId})}"><img src="shop/images/cart.png" alt="商品详细情况" /></a>
+															</div>
+													<div class="clear"></div>
+												</div>
+											</div>
+											</div>
+										<div class="clear"></div>
+									</div>
+								</div>
+							</div>
+							<div class="clear"></div>
+							<div class="navgation-links">
+								<a name="Menu"></a>
+								<div th:replace="mobile/topBar::page-top-bar"></div>
+								
+							</div>
+							<div class="footer-bottom">
+								<div class="copy">
+								<div th:replace="mobile/copyRight::page-copy-right"></div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	</div>
+	</div>
+</body>
+</html>

@@ -1,0 +1,93 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+	<meta charset="UTF-8"/>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1"/>
+	<title>好农易</title>
+	<link href="css1/bootstrap.min.css" rel="stylesheet"/>
+	<link href="css1/style.css" rel="stylesheet"/>
+	<!--[if lt IE 9]>
+		<script src="js/html5.js"></script>
+		<script src="js/respond.min.js"></script>
+	<![endif]-->
+</head>
+<body class="regPage">
+	<div class="top">
+		<div class="container cf">
+			<div class="phone">
+				<a href="#" class="btnLink" id="qrBtn"> <i class="ico-phone"></i>手机版商城 <i class="arrowB"></i></a>
+				<div class="qr" id="qrBox">
+					<i class="dot"></i>
+					<img src="images1/qr.jpg" alt=" "/>
+					<p class="mt5">扫描二维码<br/>安装安卓客户端</p>
+				</div>
+			</div>
+			<p class="userInfo">您好，请 <a th:href="@{initGuestLogin}"><span class="button-t">登录</span></a><i class="line">|</i><a th:href="@{initGuestRegister}"><span class="button-t" >注册</span></a><i class="line">|</i></p>
+		</div>
+	</div>
+	<!-- top over -->
+
+	<div class="regHead">
+		<div class="container">
+			<a th:href="@{/}"><img src="images1/logo.jpg" alt=""/></a>
+			<span class="tit yh">用户登录</span>
+		</div>		
+	</div>
+	<!-- header over -->
+
+	<div class="container mt20 regBox ">
+		<form action="guestLogin" th:object="${guestForm}" method="post" class="form-horizontal">
+		   <br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			<span th:if="${#fields.hasErrors('${guestForm.*}')}"><i class="red" style="font-size:medium" th:errors="${guestForm.guestId}"></i></span>
+			<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			<span th:if="${#fields.hasErrors('${guestForm.*}')}"><i class="red" style="font-size:medium" th:errors="${guestForm.password}"></i></span>
+										<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+								<span  class="red" style="font-size:medium" th:text="${message}"></span>
+		  	<div class="form-group">
+			    <label for="inputEmail3"  class="col-sm-4 control-label">用户名：</label>
+			    <div class="col-sm-8">
+			    	<input type="text" name="guestId" class="form-control" />
+			    </div>
+		  	</div>
+		  	<div class="form-group">
+			    <label for="inputPassword3" class="col-sm-4 control-label">密 码：</label>
+			    <div class="col-sm-8">
+			      	<input type="password" name="password" class="form-control"/>
+			    </div>
+		  	</div>
+		  	
+		  	<div class="form-group">
+			    <div class="col-sm-offset-4 col-sm-8">
+			      	<div class="checkbox w300 cf"><label class="fl"><input id="saveCookie" type="checkbox" value=""/> 记住密码</label><a href="#" class="fr link">忘记密码？</a></div>
+			    </div>
+		  	</div>
+		  	<div class="form-group">
+			    <div class="col-sm-offset-4 col-sm-8">
+			     	<button type="submit" class="btnYellow yh">登 录</button>
+			    </div>
+		  	</div>
+		</form>
+		<!-- 登录 -->
+	</div>
+
+
+	<footer class="foot mt20 tc">
+<div th:replace="mobile/footer :: page-footer"></div>
+	</footer>
+	<!--footer over  -->
+
+	<script src="js1/jquery-1.11.3.min.js"></script>
+	<script src="js1/bootstrap.min.js"></script>
+	<script src="js1/jquery-latest.min.js"></script>
+	<script src="js1/unslider.min.js"></script>
+	<script src="js1/jquery.event.move.js"></script>
+	<script src="js1/jquery.event.swipe.js"></script>
+	<script src="js1/comm.js"></script>
+	<script type="text/javascript" src="js1/commom.js"></script>
+	<script type="text/javascript" src="js1/cookie.js"></script>
+</body>
+</html>

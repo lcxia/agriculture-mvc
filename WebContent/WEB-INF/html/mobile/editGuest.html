@@ -1,0 +1,124 @@
+<!--A Design by W3layouts
+Author: W3layout
+Author URL: http://w3layouts.com
+License: Creative Commons Attribution 3.0 Unported
+License URL: http://creativecommons.org/licenses/by/3.0/
+-->
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>好农易商城</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport"	content="width=device-width, initial-scale=1, maximum-scale=1" />
+<link rel="stylesheet" href="mobile/css/style.css" type="text/css"	media="all" />
+</head>
+<body>
+	<div class="wrap">
+		<div class="header-bg">
+			<div class="h-bg">
+				<div class="total">
+					<div class="header">
+						<div class="box_header_user_menu">
+							<div th:replace="mobile/userBar::page-user-bar"></div>
+						</div>
+						<div class="clear"></div>
+					</div>
+					<div class="header-bot">
+					    <div th:replace="mobile/logo::page-logo"></div>
+						<nav class="clearfix"> 
+						<a href="#Menu">Menu<img
+							class="menu" src="mobile/images/nav-icon.png" title="Menu" /></a>
+						</nav>
+					</div>
+					<div class="header-bottom">
+						<div class="banner-top">
+							<div id="slideshow">
+								
+							</div>
+							<div class="header-para">
+							    <div th:replace="mobile/rightBar::page-right-bar"></div>
+							</div>
+							<div class="header_bottom_right_images">
+								<form th:object="${guestForm}" action="editGuest"
+									method="post">
+									<div class="about_wrapper">
+										<h1>
+											<span th:text="${message}"></span>
+											<span th:if="${#fields.hasErrors('${guestForm.*}')}"><span th:errors="${guestForm.*}"></span></span>
+										</h1>
+									</div>
+									<div class="section group">
+										<div class="col span_2_of_c">
+											<div class="contact-form">
+												<h3>修改客户信息</h3>
+												<div>
+													<span><label>用户名<span style="display:inline;color:red;">*</span></label></span> 
+													<span><input name="guestId" type="text" th:value="${guestForm.guestId}" /></span>
+												</div>
+												<div>
+													<span><label>密码<span style="display:inline;color:red;">*</span></label></span> 
+													<span><input name="password" type="password" /></span>
+												</div>
+												<div>
+													<span><label>确认密码</label></span> 
+													<span><input name="passwordConfirm" type="password" /></span>
+												</div>
+												<div>
+													<span><label>姓名<span style="display:inline;color:red;">*</span></label></span> <span><input
+														name="guestName" type="text" th:value="${guestForm.guestName}" /></span>
+												</div>
+												<div>
+													<span><label>性别</label></span> <span><input
+														name="gender" type="text" th:value="${guestForm.gender}" /></span>
+												</div>
+												<div>
+													<span><label>收货地址<span style="display:inline;color:red;">*</span></label></span> <span><input
+														name="address" type="text" th:value="${guestForm.address}" /></span>
+												</div>
+												<div>
+													<span><label>电话号码<span style="display:inline;color:red;">*</span></label></span> <span><input
+														name="mobile" type="text" th:value="${guestForm.mobile}" /></span>
+												</div>
+												<div>
+													<span><label>Email</label></span> <span><input
+														name="email" type="text" th:value="${guestForm.email}" /></span>
+												</div>
+												<div>
+													<span><label>QQ</label></span> <span><input
+														name="qq" type="text" th:value="${guestForm.qq}" /></span>
+												</div>
+												<div>
+													<span><label>座机号码</label></span> <span><input
+														name="phone" type="text" th:value="${guestForm.phone}" /></span>
+												</div>
+												<div>
+													<span><label>邮政编码</label></span> <span><input
+														name="zip" type="text" th:value="${guestForm.zip}" /></span>
+												</div>
+												<div>
+													<span><input type="submit" value="提交" /></span>
+												</div>
+											</div>
+										</div>
+										<div class="clear"></div>
+									</div>
+								</form>
+							</div>
+							<div class="clear"></div>
+							<div class="navgation-links">
+								<a name="Menu"> </a>
+								<div th:replace="mobile/topBar::page-top-bar"></div>
+							</div>
+							<div class="footer-bottom">
+								<div class="copy">
+									<div th:replace="mobile/copyRight::page-copy-right"></div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

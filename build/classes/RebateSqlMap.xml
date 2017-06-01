@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap
+            PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+            "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<!-- SqlMap定義 -->
+<sqlMap namespace="Rebate">
+	<select id="selectRebateList"
+		parameterClass="cn.agriculture.web.form.RebateForm"
+		resultClass="cn.agriculture.web.form.RebateForm">
+		SELECT distributor.distributor_id as distributorId,
+			distributor.distributor_name as distributorName,
+			commodity.commodity_name as commodityName,
+			commodity.benchmark_price as benchmarkPrice,
+            alipay_history.price as retailPrice,
+            alipay_history.is_rebate as isRebate,
+			distributor.price_increment as priceIncrement,
+			distributor.amount as amount,
+			alipay_history.out_trade_no as outTradeNo
+		FROM commodity, alipay_history, distributor
+		WHERE commodity.commodity_id = alipay_history.commodity_id
+		AND alipay_history.guest_id = distributor.distributor_id
+	</select>
+	
+	<update id="editAmount" parameterClass="cn.agriculture.web.form.RebateForm">
+		UPDATE distributor SET amount = #amount#
+		WHERE distributor_id = #distributorId#
+	</update>
+	
+	<update id="editRebate" parameterClass="cn.agriculture.web.form.RebateForm">
+		UPDATE alipay_history SET is_rebate = '已返点'
+		WHERE out_trade_no = #outTradeNo#
+	</update>
+</sqlMap>

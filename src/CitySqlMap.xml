@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap
+            PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+            "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<!-- SqlMap定義 -->
+<sqlMap namespace="City">
+
+	<select id="selectCity" parameterClass="cn.agriculture.web.form.CityForm"
+		resultClass="cn.agriculture.web.form.CityForm">
+		SELECT MAX(city_id) as cityId 
+		FROM city
+	</select>
+
+	<insert id="addCity" parameterClass="cn.agriculture.web.form.CityForm">
+		INSERT INTO city(city_id, province_id, city_name)
+		VALUES(#cityId#, #provinceId#, #cityName#)
+	</insert>
+</sqlMap>
